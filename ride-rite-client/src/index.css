@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel&family=Fauna+One&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+.home {
+  padding-bottom: 6rem;
+  background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='32' height='32' patternTransform='scale(1) rotate(45)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0, 0%, 100%, 0)'/><path d='M40 16h-6m-4 0h-6m8 8v-6m0-4V8M8 16H2m-4 0h-6m8 8v-6m0-4V8'  stroke-linecap='square' stroke-width='0.5' stroke='hsla(259, 59%, 59%, 0)' fill='none'/><path d='M16-8v6m0 4v6m8-8h-6m-4 0H8m8 24v6m0 4v6m8-8h-6m-4 0H8'  stroke-linecap='square' stroke-width='0.5' stroke='hsla(206, 100%, 50%, 0.26)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+}
+
+.cart-bg {
+  background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='50' height='50' patternTransform='scale(1) rotate(45)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0, 0%, 100%, 0)'/><path d='M-13.92-13.92L-8.57 0l-5.35 13.92L0 8.57l13.92 5.35L8.57 0l5.35-13.92L0-8.57l-13.92-5.35zm50 0L41.43 0l-5.35 13.92L50 8.57l13.92 5.35L58.57 0l5.35-13.92L50-8.57l-13.92-5.35zm-50 50L-8.57 50l-5.35 13.92L0 58.57l13.92 5.35L8.57 50l5.35-13.92L0 41.43l-13.92-5.35zm50 0L41.43 50l-5.35 13.92L50 58.57l13.92 5.35L58.57 50l5.35-13.92L50 41.43l-13.92-5.35z'  stroke-linecap='square' stroke-width='0.5' stroke='hsla(245, 100%, 0%, 0)' fill='none'/><path d='M25-8.15L21.87 0 25 8.15 28.13 0 25-8.15zM0 21.87L-8.15 25 0 28.13 8.15 25 0 21.87zm50 0L41.85 25 50 28.13 58.15 25 50 21.87zM25 41.85L21.87 50 25 58.15 28.13 50 25 41.85z'   stroke-linecap='square' stroke-width='0.5' stroke='hsla(340, 82%, 52%, 0)' fill='none'/><path d='M-25-25l9.61 25L-25 25l25-9.61L25 25 15.39 0 25-25 0-15.39-25-25zm50 0l9.61 25L25 25l25-9.61L75 25 65.39 0 75-25l-25 9.61L25-25zm50 50l-25 9.61L25 25l9.61 25L25 75l25-9.61L75 75l-9.61-25L75 25zM25 75l-9.61-25L25 25 0 34.61-25 25l9.61 25L-25 75l25-9.61L25 75z'   stroke-linecap='square' stroke-width='0.5' stroke='hsla(199, 0%, 100%, 0.22)' fill='none'/><path d='M-3.15-3.15v6.3h6.3v-6.3h-6.3zm50 0v6.3h6.3v-6.3h-6.3zm-50 50v6.3h6.3v-6.3h-6.3zm50 0v6.3h6.3v-6.3h-6.3z'   stroke-linecap='square' stroke-width='0.5' stroke='hsla(47, 0%, 100%, 0.21)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+}
+.app {
+  margin: auto;
+}
