@@ -66,7 +66,7 @@ const AddressForm = ({
       />
       <TextField
         fullWidth
-        type="text"
+        type="number"
         inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
         label="Building Number"
         onBlur={handleBlur}
