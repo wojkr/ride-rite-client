@@ -47,7 +47,7 @@ const Item = ({ item, width }) => {
           width="300px"
           height="400px"
           onClick={() => navigate(`/item/${item.id}`)}
-          style={{ cursor: "pointer", objectFit: "cover" }}
+          style={{ cursor: "pointer", objectFit: "contain" }}
         />
 
         {/* INCREASE DECRASE AMOUNT */}
