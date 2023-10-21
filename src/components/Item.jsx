@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../state";
 import { shades } from "../theme";
+import { serverUrl } from "../serverUrl";
 
 const Item = ({ item, width }) => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const Item = ({ item, width }) => {
         height="400px"
       >
         <img
-          src={`http://localhost:1337${url}`}
+          src={`${serverUrl}${url}`}
           alt={name}
           width="300px"
           height="400px"

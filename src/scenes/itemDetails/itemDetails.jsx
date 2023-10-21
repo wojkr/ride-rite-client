@@ -20,6 +20,7 @@ import Item from "../../components/Item";
 
 import { addToCart } from "../../state";
 import { shades } from "../../theme";
+import { serverUrl } from "../../serverUrl";
 
 const ItemDetails = () => {
   const { itemId } = useParams();
@@ -38,7 +39,7 @@ const ItemDetails = () => {
 
   const getItem = async () => {
     const item = await fetch(
-      `http://localhost:1337/api/items/${itemId}?populate=image`,
+      `${serverUrl}/api/items/${itemId}?populate=image`,
       {
         method: "GET",
       }
@@ -47,12 +48,9 @@ const ItemDetails = () => {
     setItem(itemJson.data);
   };
   const getItems = async () => {
-    const items = await fetch(
-      `http://localhost:1337/api/items?populate=image`,
-      {
-        method: "GET",
-      }
-    );
+    const items = await fetch(`${serverUrl}/api/items?populate=image`, {
+      method: "GET",
+    });
     const itemsJson = await items.json();
     setLastItemId(itemsJson.data[itemsJson.data?.length - 1].id);
     setItems(itemsJson.data);
@@ -88,7 +86,7 @@ const ItemDetails = () => {
           // maxWidth="500px"
         >
           <img
-            src={`http://localhost:1337${item?.attributes.image?.data?.attributes?.formats?.medium?.url}`}
+            src={`${serverUrl}${item?.attributes.image?.data?.attributes?.formats?.medium?.url}`}
             alt={item?.name}
             width="100%"
             height="100%"

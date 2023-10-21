@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Item from "../../components/Item";
 import { setItems } from "../../state";
+import { serverUrl } from "../../serverUrl";
 
 const ShoppingList = () => {
   const dispatch = useDispatch();
@@ -16,12 +17,9 @@ const ShoppingList = () => {
   };
 
   const getItems = async () => {
-    const items = await fetch(
-      `http://localhost:1337/api/items?populate=image`,
-      {
-        method: "GET",
-      }
-    );
+    const items = await fetch(`${serverUrl}/api/items?populate=image`, {
+      method: "GET",
+    });
     const itemsJson = await items.json();
     dispatch(setItems(itemsJson.data));
   };

@@ -17,6 +17,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Collapse } from "@mui/material";
 import { useEffect, useRef } from "react";
+import { serverUrl } from "../../serverUrl";
 
 const FlexBox = styled(Box)`
   display: flex;
@@ -107,7 +108,7 @@ const CartMenu = () => {
                           width="123px"
                           height="164px"
                           style={{ cursor: "pointer", objectFit: "cover" }}
-                          src={`http://localhost:1337${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
+                          src={`${serverUrl}${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
                         />
                       </Box>
 
