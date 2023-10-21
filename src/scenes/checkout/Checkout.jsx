@@ -7,6 +7,7 @@ import { shades } from "../../theme";
 import Shipping from "./Shipping";
 import Payment from "./Payment";
 import { loadStripe } from "@stripe/stripe-js";
+import { serverUrl } from "../../serverUrl";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
@@ -123,16 +124,12 @@ const Checkout = () => {
         count,
       })),
     };
-    const response = await fetch(
-      "https://ride-rite-server.onrender.com/api/orders",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(requestBody),
-      }
-    );
+    const response = await fetch(`${serverUrl}/api/orders`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestBody),
+    });
     const session = await response.json();
-    console.log(session);
     await stripe.redirectToCheckout({ sessionId: session.id });
   };
 

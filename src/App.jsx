@@ -23,7 +23,7 @@ const ScrollToTop = () => {
 function App() {
   return (
     <div className="app">
-      <BrowserRouter>
+      <BrowserRouter basename="/ride-rite-client">
         <Navbar />
         <ScrollToTop />
         <Routes>
