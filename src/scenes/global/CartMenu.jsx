@@ -107,7 +107,11 @@ const CartMenu = () => {
                           alt={item?.name}
                           width="123px"
                           height="164px"
-                          style={{ cursor: "pointer", objectFit: "cover" }}
+                          style={{
+                            cursor: "pointer",
+                            objectFit: "cover",
+                            backgroundColor: shades.neutral[200],
+                          }}
                           src={`${serverUrl}${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
                         />
                       </Box>

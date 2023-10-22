@@ -37,7 +37,7 @@ const Item = ({ item, width }) => {
     <Box width={width}>
       <Box
         position="relative"
-        backgroundColor={shades.primary[400]}
+        backgroundColor={shades.neutral[100] + "F0"}
         onMouseOver={() => setIsHovered(true)}
         onMouseOut={() => setIsHovered(false)}
         height="400px"

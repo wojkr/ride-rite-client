@@ -91,7 +91,10 @@ const ItemDetails = () => {
             width="100%"
             height="100%"
             // maxWidth="500px"
-            style={{ objectFit: "contain" }}
+            style={{
+              objectFit: "contain",
+              backgroundColor: shades.neutral[200],
+            }}
           />
         </Box>
         {/* TEXT */}
