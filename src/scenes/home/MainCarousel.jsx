@@ -28,12 +28,18 @@ const MainCarousel = () => {
             position: "absolute",
             top: "50%",
             left: "0",
-            color: "white",
             padding: "5px",
             zIndex: "10",
           }}
         >
-          <NavigateBefore sx={{ fontSize: 40 }} />
+          <NavigateBefore
+            sx={{
+              fontSize: 46,
+              background: shades.neutral[100],
+              borderRadius: "100%",
+              padding: "10px",
+            }}
+          />
         </IconButton>
       )}
       renderArrowNext={(onClickHandler, hasNext, label) => (
@@ -43,12 +49,17 @@ const MainCarousel = () => {
             position: "absolute",
             top: "50%",
             right: "0",
-            color: "white",
-            padding: "5px",
             zIndex: "10",
           }}
         >
-          <NavigateNext sx={{ fontSize: 40 }} />
+          <NavigateNext
+            sx={{
+              fontSize: 46,
+              background: shades.neutral[100],
+              borderRadius: "100%",
+              padding: "10px",
+            }}
+          />
         </IconButton>
       )}
     >
@@ -66,23 +77,40 @@ const MainCarousel = () => {
           />
           {/* CONTAINER FOR TEXT */}
           <Box
-            color="white"
-            padding="20px"
+            padding="20px 0"
             borderRadius="1px"
-            textAlign="left"
-            backgroundColor="#010101aa"
+            textAlign="right"
             position="absolute"
             top="45%"
-            left={isNonMobile ? "10%" : "0"}
-            right={isNonMobile ? undefined : "0"}
+            right={isNonMobile ? "10%" : "0"}
+            left={isNonMobile ? undefined : "0"}
             margin={isNonMobile ? undefined : "0 auto"}
             maxWidth={isNonMobile ? undefined : "240px"}
+            backgroundColor={shades.neutral[700] + "99"}
           >
-            <Typography color={shades.secondary[200]}>--NEW ITEMS</Typography>
-            <Typography variant="h1">Summer Sale</Typography>
+            <Typography
+              color="#fff"
+              fontWeight="bold"
+              paddingRight="1rem"
+              variant="h4"
+            >
+              --NEW ITEMS
+            </Typography>
+            <Typography
+              variant="h1"
+              backgroundColor={shades.neutral[100] + "ff"}
+              color="#000"
+              sx={{ mixBlendMode: "screen" }}
+              fontWeight="bold"
+              padding="1rem"
+              fontSize="10vw"
+            >
+              Summer Sale
+            </Typography>
             <Typography
               fontWeight="bold"
-              color={shades.secondary[300]}
+              paddingRight="1rem"
+              color={shades.secondary[100]}
               sx={{
                 textDecoration: "underline",
               }}

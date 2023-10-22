@@ -1,8 +1,10 @@
-import { Typography, useTheme } from "@mui/material";
+import { Typography, useTheme, useMediaQuery } from "@mui/material";
 import { Box } from "@mui/system";
 import { shades } from "../../theme";
-
+import logoImg from "../../assets/logo300x94.webp";
+import logoImgMini from "../../assets/logo100.webp";
 const Footer = () => {
+  const isNonMobile = useMediaQuery("(min-width:600px)");
   const {
     palette: { neutral },
   } = useTheme();
@@ -23,9 +25,19 @@ const Footer = () => {
           gap="20px"
         >
           <Box width="clamp(30%,40%,50%)">
-            <Typography mb="1rem" variant="h3" fontWeight="bold">
-              RIDE RITE
-            </Typography>
+            <Box
+              onClick={() => navigate("/")}
+              sx={{
+                "&:hover": { cursor: "pointer" },
+              }}
+              mb="1rem"
+            >
+              <img
+                src={isNonMobile ? logoImg : logoImgMini}
+                alt="ride rite logo"
+                height="30px"
+              />
+            </Box>
             <Typography mb="1rem" variant="subtitle2" lineHeight="200%">
               Our experienced team is dedicated to providing exceptional
               customer service, helping you find the perfect bike and gear for

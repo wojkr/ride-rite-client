@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Item from "../../components/Item";
 import { setItems } from "../../state";
 import { serverUrl } from "../../serverUrl";
+import { shades } from "../../theme";
 
 const ShoppingList = () => {
   const dispatch = useDispatch();
@@ -37,12 +38,13 @@ const ShoppingList = () => {
   const topRated = items.filter((i) => i.attributes.category === "topRated");
   return (
     <Box className="" width="80%" margin="80px auto">
-      <Typography variant="h2" textAlign="center">
-        Our Feaetured <b>Products</b>
+      <Typography variant="h2" textAlign="center" color={shades.neutral[700]}>
+        Our Featured <b>Products</b>
       </Typography>
       <Tabs
         textColor="primary"
-        indicatorColor="primary"
+        indicatorColor="secondary"
+        color={shades.neutral[400]}
         value={value}
         onChange={handleChange}
         centered

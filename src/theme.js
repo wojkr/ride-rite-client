@@ -45,25 +45,26 @@ export const theme = createTheme({
       main: shades.neutral[500],
       light: shades.neutral[100],
     },
+    dark: { main: shades.neutral[700] },
   },
   typography: {
-    fontFamily: ["Fauna One", "sans-serif"].join(","),
-    fontSize: 11,
+    fontFamily: ["Cantarell", "sans-serif"].join(","),
+    fontSize: 14,
     h1: {
-      fontFamily: ["Cinzel", "sans-serif"].join(","),
-      fontSize: 48,
+      fontFamily: ["Raleway", "sans-serif"].join(","),
+      fontSize: 56,
     },
     h2: {
-      fontFamily: ["Cinzel", "sans-serif"].join(","),
-      fontSize: 36,
+      fontFamily: ["Raleway", "sans-serif"].join(","),
+      fontSize: 48,
     },
     h3: {
-      fontFamily: ["Cinzel", "sans-serif"].join(","),
-      fontSize: 20,
+      fontFamily: ["Raleway", "sans-serif"].join(","),
+      fontSize: 36,
     },
     h4: {
-      fontFamily: ["Cinzel", "sans-serif"].join(","),
-      fontSize: 14,
+      fontFamily: ["Raleway", "sans-serif"].join(","),
+      fontSize: 20,
     },
   },
 });

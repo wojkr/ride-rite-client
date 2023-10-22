@@ -1,11 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Badge, Box, IconButton, Typography } from "@mui/material";
+import { Badge, Box, IconButton, useMediaQuery } from "@mui/material";
 import {
   PersonOutline,
   ShoppingBagOutlined,
   MenuOutlined,
   SearchOutlined,
 } from "@mui/icons-material";
+import logoImg from "../../assets/logo300x94.webp";
+import logoImgMini from "../../assets/logo100.webp";
 import { useNavigate } from "react-router-dom";
 import { shades } from "../../theme";
 import { setIsCartOpen } from "../../state";
@@ -13,6 +15,7 @@ import { setIsCartOpen } from "../../state";
 const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isNonMobile = useMediaQuery("(min-width:600px)");
   const { cart } = useSelector((state) => state.cart);
   return (
     <nav className="">
@@ -38,26 +41,23 @@ const Navbar = () => {
           justifyContent="space-between"
         >
           <Box
-            className=""
             onClick={() => navigate("/")}
             sx={{
               "&:hover": { cursor: "pointer" },
             }}
-            color={shades.secondary[600]}
           >
-            <Typography
-              variant="h2"
-              sx={{ textShadow: "-1px 0px 1px #131313" }}
-            >
-              RIDE RITE
-            </Typography>
+            <img
+              src={isNonMobile ? logoImg : logoImgMini}
+              alt="ride rite logo"
+              height={isNonMobile ? "30px" : "28px"}
+            />
           </Box>
           <Box
             className=""
             display="flex"
             alignItems="center"
             justifyContent="space-between"
-            columnGap="20px"
+            columnGap={isNonMobile ? "20px" : "7px"}
             zIndex="2"
           >
             <IconButton sx={{ color: "black" }}>
