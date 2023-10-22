@@ -1,5 +1,6 @@
 {
   "name": "ride-rite-client",
+  "homepage": "https://wojkr.github.io/ride-rite-client/",
   "private": true,
   "version": "0.0.0",
   "type": "module",

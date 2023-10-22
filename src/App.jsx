@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { HashRouter, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./scenes/home/Home";
 import ItemDetails from "./scenes/itemDetails/itemDetails";
 import Checkout from "./scenes/checkout/Checkout";
@@ -23,7 +23,7 @@ const ScrollToTop = () => {
 function App() {
   return (
     <div className="app">
-      <BrowserRouter basename="/ride-rite-client">
+      <HashRouter>
         <Navbar />
         <ScrollToTop />
         <Routes>
@@ -34,7 +34,7 @@ function App() {
         </Routes>
         <CartMenu />
         <Footer />
-      </BrowserRouter>
+      </HashRouter>
     </div>
   );
 }
