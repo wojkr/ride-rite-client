@@ -13,7 +13,7 @@ import {
   increaseCount,
   removeFromCart,
   setIsCartOpen,
-} from "../../state/index";
+} from "../../state/cart";
 import { useNavigate } from "react-router-dom";
 import { Collapse } from "@mui/material";
 import { useEffect, useRef } from "react";
@@ -84,7 +84,7 @@ const CartMenu = () => {
           <Box overflow="auto" height="100%">
             {/*header*/}
             <FlexBox mb="15px">
-              <Typography flexGrow={1} variant="h3">
+              <Typography flexgrow={1} variant="h3">
                 Shopping bag ({cart?.length || 0})
               </Typography>
               <IconButton onClick={() => dispatch(setIsCartOpen())}>
@@ -164,7 +164,7 @@ const CartMenu = () => {
                         </FlexBox>
                       </Box>
                     </FlexBox>
-                    <Divider />
+                    <Divider sx={{ background: shades.neutral[300] }} />
                   </Box>
                 );
               })}
