@@ -10,7 +10,8 @@ import logoImg from "../../assets/logo300x94.webp";
 import logoImgMini from "../../assets/logo100.webp";
 import { useNavigate } from "react-router-dom";
 import { shades } from "../../theme";
-import { setIsCartOpen } from "../../state";
+import { setIsCartOpen } from "../../state/cart";
+import { setIsMenuOpen } from "../../state/menu";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -87,7 +88,10 @@ const Navbar = () => {
                 <ShoppingBagOutlined />
               </IconButton>
             </Badge>
-            <IconButton sx={{ color: "black" }}>
+            <IconButton
+              onClick={() => dispatch(setIsMenuOpen())}
+              sx={{ color: "black" }}
+            >
               <MenuOutlined />
             </IconButton>
           </Box>
