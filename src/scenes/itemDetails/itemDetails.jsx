@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Item from "../../components/Item";
 
-import { addToCart } from "../../state";
+import { addToCart } from "../../state/cart";
 import { shades } from "../../theme";
 import { serverUrl } from "../../serverUrl";
 
@@ -182,7 +182,7 @@ const ItemDetails = () => {
             {item?.attributes?.category && (
               <Typography>
                 CATEGORIES:{" "}
-                <Link to="/?topRated">
+                <Link to={`/?${item?.attributes?.category}`}>
                   {item?.attributes?.category
                     ?.replace(/([A-Z])/g, " $1")
                     ?.replace(/^./g, (str) => str.toUpperCase())}
