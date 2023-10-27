@@ -7,6 +7,7 @@ const Subscribe = () => {
   const isNonMobile = useMediaQuery("(min-width:1200px");
   return (
     <Box
+      id="About"
       style={{
         background: `linear-gradient(0deg, ${shades.neutral[100] + "00"}, ${
           shades.neutral[100]

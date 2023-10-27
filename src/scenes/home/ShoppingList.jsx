@@ -1,9 +1,16 @@
-import { Box, Tab, Tabs, Typography, useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Tab,
+  Tabs,
+  Divider,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Item from "../../components/Item";
-import { setItems } from "../../state";
+import { setItems } from "../../state/cart";
 import { serverUrl } from "../../serverUrl";
 import { shades } from "../../theme";
 
@@ -37,54 +44,59 @@ const ShoppingList = () => {
   );
   const topRated = items.filter((i) => i.attributes.category === "topRated");
   return (
-    <Box className="" width="80%" margin="80px auto">
-      <Typography variant="h2" textAlign="center" color={shades.neutral[700]}>
-        Our Featured <b>Products</b>
-      </Typography>
-      <Tabs
-        textColor="primary"
-        indicatorColor="secondary"
-        color={shades.neutral[400]}
-        value={value}
-        onChange={handleChange}
-        centered
-        TabIndicatorProps={{ sx: { display: isNonMobile ? "block" : "none" } }}
-        sx={{
-          m: "25px",
-          "& .MuiTabs-flexContainer": {
-            flexWrap: "wrap",
-          },
-        }}
-      >
-        <Tab label="ALL" value="all" />
-        <Tab label="NEW ARRIVALS" value="newArrival" />
-        <Tab label="BEST SELLERS" value="bestSeller" />
-        <Tab label="TOP RATED" value="topRated" />
-      </Tabs>
-      <Box
-        margin="0 auto"
-        display="grid"
-        gridTemplateColumns="repeat(auto-fill,300px)"
-        justifyContent="space-around"
-        rowGap="20px"
-      >
-        {value === "all" &&
-          items.map((item) => (
-            <Item key={`${item.name}-${item.id}`} item={item} width="300px" />
-          ))}
-        {value === "newArrival" &&
-          newArrival.map((item) => (
-            <Item key={`${item.name}-${item.id}`} item={item} width="300px" />
-          ))}
-        {value === "bestSeller" &&
-          bestSeller.map((item) => (
-            <Item key={`${item.name}-${item.id}`} item={item} width="300px" />
-          ))}
-        {value === "topRated" &&
-          topRated.map((item) => (
-            <Item key={`${item.name}-${item.id}`} item={item} width="300px" />
-          ))}
+    <Box id="Products">
+      <Box className="" width="80%" margin="0 auto" padding="80px 0">
+        <Typography variant="h2" textAlign="center" color={shades.neutral[700]}>
+          Our Featured <b>Products</b>
+        </Typography>
+        <Tabs
+          textColor="primary"
+          indicatorColor="secondary"
+          color={shades.neutral[400]}
+          value={value}
+          onChange={handleChange}
+          centered
+          TabIndicatorProps={{
+            sx: { display: isNonMobile ? "block" : "none" },
+          }}
+          sx={{
+            m: "25px",
+            "& .MuiTabs-flexContainer": {
+              flexWrap: "wrap",
+            },
+          }}
+        >
+          <Tab label="ALL" value="all" />
+          <Tab label="NEW ARRIVALS" value="newArrival" />
+          <Tab label="BEST SELLERS" value="bestSeller" />
+          <Tab label="TOP RATED" value="topRated" />
+        </Tabs>
+        <Box
+          margin="0 auto"
+          display="grid"
+          gridTemplateColumns="repeat(auto-fill,300px)"
+          justifyContent="space-around"
+          rowGap="20px"
+        >
+          {value === "all" &&
+            items.map((item) => (
+              <Item key={`${item.name}-${item.id}`} item={item} width="300px" />
+            ))}
+          {value === "newArrival" &&
+            newArrival.map((item) => (
+              <Item key={`${item.name}-${item.id}`} item={item} width="300px" />
+            ))}
+          {value === "bestSeller" &&
+            bestSeller.map((item) => (
+              <Item key={`${item.name}-${item.id}`} item={item} width="300px" />
+            ))}
+          {value === "topRated" &&
+            topRated.map((item) => (
+              <Item key={`${item.name}-${item.id}`} item={item} width="300px" />
+            ))}
+        </Box>
       </Box>
+      <Divider sx={{ background: shades.neutral[300] }} />
     </Box>
   );
 };

@@ -9,7 +9,7 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addToCart } from "../state";
+import { addToCart } from "../state/cart";
 import { shades } from "../theme";
 import { serverUrl } from "../serverUrl";
 

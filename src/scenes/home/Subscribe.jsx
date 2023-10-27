@@ -6,7 +6,13 @@ import { shades } from "../../theme";
 const Subscribe = () => {
   const [email, setEmail] = useState("");
   return (
-    <Box width="80%" margin="80px auto 0" textAlign="center">
+    <Box
+      id="Subscribe"
+      width="80%"
+      margin="0px auto"
+      padding="80px 0"
+      textAlign="center"
+    >
       <IconButton>
         <MarkEmailReadOutlinedIcon fontSize="large" />
       </IconButton>
