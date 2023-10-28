@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { useState } from "react";
 import { shades } from "../../theme";
 import Shipping from "./Shipping";
-import Payment from "./Payment";
+import ContactForm from "./ContactForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { serverUrl } from "../../serverUrl";
 
@@ -140,6 +140,9 @@ const Checkout = () => {
           <StepLabel>Billing</StepLabel>
         </Step>
         <Step>
+          <StepLabel>Contact</StepLabel>
+        </Step>
+        <Step>
           <StepLabel>Payment</StepLabel>
         </Step>
       </Stepper>
@@ -163,11 +166,7 @@ const Checkout = () => {
 
               if (!values.phoneNumber) {
                 errors.phoneNumber = "required";
-              } else if (
-                !/^((((\(?0\d{4}\)?\s?\d{3}\s?\d{3})|(\(?0\d{3}\)?\s?\d{3}\s?\d{4})|(\(?0\d{2}\)?\s?\d{4}\s?\d{4}))(\s?\(\d{4}|\d{3}))?)|((\+44\s?7\d{3}|\(?07\d{3}\)?)\s?\d{3}\s?\d{3})|((((\+44\s?\d{4}|\(?0\d{4}\)?)\s?\d{3}\s?\d{3})|((\+44\s?\d{3}|\(?0\d{3}\)?)\s?\d{3}\s?\d{4})|((\+44\s?\d{2}|\(?0\d{2}\)?)\s?\d{4}\s?\d{4}))(\s?\(\d{4}|\d{3}))?$/.test(
-                  values.phoneNumber
-                )
-              ) {
+              } else if (!/^[0-9\s()\/+=]+$/.test(values.phoneNumber)) {
                 errors.phoneNumber = "Invalid Phone Number";
               }
             }
@@ -200,7 +199,7 @@ const Checkout = () => {
 
               {/* SECOND STEP */}
               {isSecondStep && (
-                <Payment
+                <ContactForm
                   values={values}
                   errors={errors}
                   touched={touched}
@@ -230,34 +229,24 @@ const Checkout = () => {
                     Back
                   </Button>
                 )}
-                <Button
-                  fullWidth
-                  type="submit"
-                  color="primary"
-                  variant="contained"
-                  sx={{
-                    backgroundColor: shades.primary[500],
-                    boxShadow: "none",
-                    color: "white",
-                    borderRaddius: "none",
-                    padding: "15px 40px ",
-                  }}
-                >
-                  {isFirstStep ? "Next" : "Place Order"}
-                </Button>
+                {activeStep < 2 && (
+                  <Button
+                    fullWidth
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    sx={{
+                      backgroundColor: shades.primary[500],
+                      boxShadow: "none",
+                      color: "white",
+                      borderRaddius: "none",
+                      padding: "15px 40px ",
+                    }}
+                  >
+                    {isFirstStep ? "Next" : "Place Order"}
+                  </Button>
+                )}
               </Box>
-
-              {/* {isSecondStep && (
-                <Shipping
-                  values={values}
-                  errors={errors}
-                  touched={touched}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  handleSubmit={handleSubmit}
-                  setFieldValue={setFieldValue}
-                />
-              )} */}
             </form>
           )}
         </Formik>
