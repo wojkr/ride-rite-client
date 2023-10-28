@@ -9,6 +9,10 @@ import CartMenu from "./scenes/global/CartMenu";
 import Menu from "./scenes/global/Menu";
 import Footer from "./scenes/global/Footer";
 import Error from "./scenes/global/Error";
+import RegisterUser from "./scenes/user/registerUser";
+import User from "./scenes/user/User";
+import LoginUser from "./scenes/user/LoginUser";
+import { user } from "./model/menu";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -21,7 +25,6 @@ const ScrollToTop = () => {
 
   return null;
 };
-
 function App() {
   return (
     <div className="app">
@@ -30,9 +33,16 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
+
           <Route path="item/:itemId" element={<ItemDetails />} />
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="checkout/success" element={<Conformation />} />
+
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/checkout/success" element={<Conformation />} />
+
+          <Route path={`/${user.linkText}`} element={<User />} />
+          <Route path={`/${user.login.link()}`} element={<LoginUser />} />
+          <Route path={`/${user.register.link()}`} element={<RegisterUser />} />
+
           <Route path="/*" element={<Error />} />
         </Routes>
         <CartMenu />

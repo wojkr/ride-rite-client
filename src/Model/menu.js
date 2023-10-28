@@ -34,13 +34,33 @@ const subscribe = {
 
 const ourstores = {
   title: "Our Stores",
-  linkText: "OurStores",
+  linkText: "ourstores",
   link: function () {
     //OTHER ROUTE, no hash
     return "/" + this.linkText;
   },
   isLast: true,
 };
-
+const user = {
+  title: "User",
+  linkText: "user",
+  register: {
+    title: "Register",
+    linkText: "register",
+    link: function () {
+      return "/" + user.linkText + "/" + this.linkText;
+    },
+  },
+  login: {
+    title: "Login",
+    linkText: "login",
+    link: function () {
+      return "/" + user.linkText + "/" + this.linkText;
+    },
+  },
+  link: function () {
+    return "/" + this.linkText;
+  },
+};
 const menu = [home, about, products, subscribe, ourstores];
-export { home, about, products, subscribe, ourstores, menu };
+export { home, about, products, subscribe, ourstores, user, menu };
