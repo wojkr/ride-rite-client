@@ -1,5 +1,4 @@
-import { Box, Typography, Divider, useMediaQuery } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Typography, Button, useMediaQuery } from "@mui/material";
 import { shades } from "../../theme";
 const Error = () => {
   const isNonMobile = useMediaQuery("(min-width:1200px");
@@ -16,7 +15,7 @@ const Error = () => {
         padding="120px 0"
         margin="0 auto"
         display="flex"
-        flexDirection={isNonMobile ? "row" : "column"}
+        flexDirection="column"
         justifyContent="space-evenly"
         alignItems="baseline"
         gap={isNonMobile ? "5rem" : "1rem"}
@@ -35,13 +34,25 @@ const Error = () => {
             fontWeight="bold"
             lineHeight="150%"
             color={shades.neutral[600]}
+            marginBottom="1rem"
           >
             something went wrong :(
           </Typography>
+
+          <Typography>
+            <Button
+              variant="contained"
+              href="/"
+              sx={{
+                backgroundColor: shades.primary[400],
+                color: "white",
+                "&:hover": { backgroundColor: shades.primary[500] },
+              }}
+            >
+              Go to Homepage
+            </Button>
+          </Typography>
         </Box>
-        <Typography>
-          <Link to="/"> Go to Homepage</Link>
-        </Typography>
       </Box>
     </Box>
   );

@@ -12,7 +12,7 @@ import logoImgMini from "../../assets/logo100.webp";
 import { shades } from "../../theme";
 import { setIsCartOpen } from "../../state/cart";
 import { setIsMenuOpen } from "../../state/menu";
-import { home } from "../../model/menu";
+import { home, user } from "../../model/menu";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const Navbar = () => {
               "&:hover": { cursor: "pointer" },
             }}
           >
-            <Link to={home}>
+            <Link to={home.link()}>
               <img
                 src={isNonMobile ? logoImg : logoImgMini}
                 alt="ride rite logo"
@@ -65,9 +65,11 @@ const Navbar = () => {
             <IconButton sx={{ color: "black" }}>
               <SearchOutlined />
             </IconButton>
-            <IconButton sx={{ color: "black" }}>
-              <PersonOutline />
-            </IconButton>
+            <Link to={user.link()}>
+              <IconButton sx={{ color: "black" }}>
+                <PersonOutline />
+              </IconButton>
+            </Link>
             <Badge
               badgeContent={cart.length}
               color="secondary"
