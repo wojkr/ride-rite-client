@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { Badge, Box, IconButton, useMediaQuery } from "@mui/material";
 import {
   PersonOutline,
@@ -8,13 +9,12 @@ import {
 } from "@mui/icons-material";
 import logoImg from "../../assets/logo300x94.webp";
 import logoImgMini from "../../assets/logo100.webp";
-import { useNavigate } from "react-router-dom";
 import { shades } from "../../theme";
 import { setIsCartOpen } from "../../state/cart";
 import { setIsMenuOpen } from "../../state/menu";
+import { home } from "../../model/menu";
 
 const Navbar = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const { cart } = useSelector((state) => state.cart);
@@ -42,16 +42,17 @@ const Navbar = () => {
           justifyContent="space-between"
         >
           <Box
-            onClick={() => navigate("/")}
             sx={{
               "&:hover": { cursor: "pointer" },
             }}
           >
-            <img
-              src={isNonMobile ? logoImg : logoImgMini}
-              alt="ride rite logo"
-              height={isNonMobile ? "30px" : "28px"}
-            />
+            <Link to={home}>
+              <img
+                src={isNonMobile ? logoImg : logoImgMini}
+                alt="ride rite logo"
+                height={isNonMobile ? "30px" : "28px"}
+              />
+            </Link>
           </Box>
           <Box
             className=""

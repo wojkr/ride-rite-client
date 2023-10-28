@@ -7,23 +7,23 @@ import { setIsMenuOpen } from "../../state/menu";
 import { Link } from "react-router-dom";
 import { Collapse } from "@mui/material";
 import { useEffect, useRef } from "react";
+import { menu } from "../../model/menu";
 
 const FlexBox = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
+const MenuLink = styled(Link)({
+  display: "block",
+  padding: "0.5rem 0",
+  textDecoration: "none",
+  fontSize: 32,
+  color: theme.palette.neutral.dark,
+  fontFamily: theme.typography.h4.fontFamily,
+});
 
 const Menu = () => {
-  const MenuLink = styled(Link)({
-    display: "block",
-    padding: "0.5rem 0",
-    textDecoration: "none",
-    fontSize: 32,
-    color: theme.palette.neutral.dark,
-    fontFamily: theme.typography.h4.fontFamily,
-  });
-
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.menu);
 
@@ -54,7 +54,6 @@ const Menu = () => {
         top="0"
         left="0"
         width="100%"
-        //   width={isMenuOpen ? "500px" : "0"}
         height="100%"
         padding="20px"
         zIndex="10"
@@ -67,7 +66,6 @@ const Menu = () => {
           top="0"
           right="0"
           width="max(400px,30%)"
-          //   width={isCartOpen ? "500px" : "0"}
           height="100%"
           padding="30px"
           zIndex="100"
@@ -82,41 +80,19 @@ const Menu = () => {
               </IconButton>
             </FlexBox>
             <Box>
-              <MenuLink
-                to="/#Home"
-                onClick={() => dispatch(setIsMenuOpen(false))}
-              >
-                Home
-              </MenuLink>
-              <Divider sx={{ background: shades.neutral[300] }} />
-
-              <MenuLink
-                to="/#About"
-                onClick={() => dispatch(setIsMenuOpen(false))}
-              >
-                About Us
-              </MenuLink>
-              <Divider sx={{ background: shades.neutral[300] }} />
-              <MenuLink
-                to="/#Products"
-                onClick={() => dispatch(setIsMenuOpen(false))}
-              >
-                Products
-              </MenuLink>
-              <Divider sx={{ background: shades.neutral[300] }} />
-              <MenuLink
-                to="/#Subscribe"
-                onClick={() => dispatch(setIsMenuOpen(false))}
-              >
-                Subscribe
-              </MenuLink>
-              <Divider sx={{ background: shades.neutral[300] }} />
-              <MenuLink
-                to="/OurStores"
-                onClick={() => dispatch(setIsMenuOpen(false))}
-              >
-                Our Stores
-              </MenuLink>
+              {menu.map((m, index) => (
+                <Box key={`${m.title}-${index}`}>
+                  <MenuLink
+                    to={m.link()}
+                    onClick={() => dispatch(setIsMenuOpen(false))}
+                  >
+                    {m.title}
+                  </MenuLink>
+                  {!m.isLast && (
+                    <Divider sx={{ borderColor: shades.neutral[700] }} />
+                  )}
+                </Box>
+              ))}
             </Box>
           </Box>
         </Box>

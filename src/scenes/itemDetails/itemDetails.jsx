@@ -1,12 +1,4 @@
-import {
-  Box,
-  Typography,
-  Button,
-  useTheme,
-  IconButton,
-  Tabs,
-  Tab,
-} from "@mui/material";
+import { Box, Typography, Button, IconButton, Tabs, Tab } from "@mui/material";
 import {
   Remove as RemoveIcon,
   Add as AddIcon,
@@ -14,15 +6,17 @@ import {
   FavoriteBorderOutlined,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Item from "../../components/Item";
 
 import { addToCart } from "../../state/cart";
 import { shades } from "../../theme";
 import { serverUrl } from "../../serverUrl";
+import { products } from "../../model/menu";
 
 const ItemDetails = () => {
+  // const products = menuData.products;
   const { itemId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -182,7 +176,9 @@ const ItemDetails = () => {
             {item?.attributes?.category && (
               <Typography>
                 CATEGORIES:{" "}
-                <Link to={`/?${item?.attributes?.category}`}>
+                <Link
+                  to={`/?${item?.attributes?.category}#${products.linkText}`}
+                >
                   {item?.attributes?.category
                     ?.replace(/([A-Z])/g, " $1")
                     ?.replace(/^./g, (str) => str.toUpperCase())}

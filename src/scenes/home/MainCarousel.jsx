@@ -1,14 +1,26 @@
+import { Link } from "react-router-dom";
 import { Box, IconButton, Typography, useMediaQuery } from "@mui/material";
+import styled from "@emotion/styled";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { NavigateBefore, PinSharp } from "@mui/icons-material";
 import { NavigateNext } from "@mui/icons-material";
-import { shades } from "../../theme";
+import { theme, shades } from "../../theme";
 import pic from "../../assets/1.jpg";
 import pic2 from "../../assets/2.jpg";
 import pic3 from "../../assets/3.jpg";
 import pic4 from "../../assets/4.jpg";
 import pic5 from "../../assets/5.jpg";
+import { category } from "../../model/category";
+import { products } from "../../model/menu";
+
+const DiscoverLink = styled(Link)({
+  fontFamily: theme.typography.h4.fontFamily,
+  fontWeight: "bold",
+  paddingRight: "1rem",
+  color: shades.secondary[100],
+  textDecoration: "underline",
+});
 
 const heroTextureImports = [pic, pic2, pic3, pic4, pic5];
 const MainCarousel = () => {
@@ -116,16 +128,9 @@ const MainCarousel = () => {
               >
                 Summer Sale
               </Typography>
-              <Typography
-                fontWeight="bold"
-                paddingRight="1rem"
-                color={shades.secondary[100]}
-                sx={{
-                  textDecoration: "underline",
-                }}
-              >
+              <DiscoverLink to={`/?${category.all}#${products.linkText}`}>
                 Discover More
-              </Typography>
+              </DiscoverLink>
             </Box>
           </Box>
         ))}

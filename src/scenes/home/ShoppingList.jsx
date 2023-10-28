@@ -13,13 +13,13 @@ import Item from "../../components/Item";
 import { setItems } from "../../state/cart";
 import { serverUrl } from "../../serverUrl";
 import { shades } from "../../theme";
+import { category as categoryModel } from "../../model/category";
 
-const ShoppingList = () => {
+const ShoppingList = ({ categoryId }) => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState("all");
+  const [value, setValue] = useState(categoryModel.check(categoryId));
   const items = useSelector((state) => state.cart.items);
   const isNonMobile = useMediaQuery("(min-width:600px)");
-
   const handleChange = (e, newValue) => {
     setValue(newValue);
   };
@@ -37,12 +37,14 @@ const ShoppingList = () => {
   }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const newArrival = items.filter(
-    (i) => i.attributes.category === "newArrival"
+    (i) => i.attributes.category === categoryModel.newArrival
   );
   const bestSeller = items.filter(
-    (i) => i.attributes.category === "bestSeller"
+    (i) => i.attributes.category === categoryModel.bestSeller
   );
-  const topRated = items.filter((i) => i.attributes.category === "topRated");
+  const topRated = items.filter(
+    (i) => i.attributes.category === categoryModel.topRated
+  );
   return (
     <Box id="Products">
       <Box className="" width="80%" margin="0 auto" padding="80px 0">
@@ -66,10 +68,10 @@ const ShoppingList = () => {
             },
           }}
         >
-          <Tab label="ALL" value="all" />
-          <Tab label="NEW ARRIVALS" value="newArrival" />
-          <Tab label="BEST SELLERS" value="bestSeller" />
-          <Tab label="TOP RATED" value="topRated" />
+          <Tab label="ALL" value={categoryModel.all} />
+          <Tab label="NEW ARRIVALS" value={categoryModel.newArrival} />
+          <Tab label="BEST SELLERS" value={categoryModel.bestSeller} />
+          <Tab label="TOP RATED" value={categoryModel.topRated} />
         </Tabs>
         <Box
           margin="0 auto"

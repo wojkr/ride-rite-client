@@ -3,7 +3,12 @@ import { Box } from "@mui/system";
 import { shades } from "../../theme";
 import logoImg from "../../assets/logo300x94.webp";
 import logoImgMini from "../../assets/logo100.webp";
+import { Link } from "react-router-dom";
+import { home } from "../../model/menu";
+// import menuData from "../../model/menu";
+
 const Footer = () => {
+  // const home = menuData.home;
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const {
     palette: { neutral },
@@ -26,17 +31,18 @@ const Footer = () => {
         >
           <Box width="clamp(30%,40%,50%)">
             <Box
-              onClick={() => navigate("/")}
               sx={{
                 "&:hover": { cursor: "pointer" },
               }}
               mb="1rem"
             >
-              <img
-                src={isNonMobile ? logoImg : logoImgMini}
-                alt="ride rite logo"
-                height="30px"
-              />
+              <Link to={home.link()}>
+                <img
+                  src={isNonMobile ? logoImg : logoImgMini}
+                  alt="ride rite logo"
+                  height="30px"
+                />
+              </Link>
             </Box>
             <Typography mb="1rem" variant="subtitle2" lineHeight="200%">
               Our experienced team is dedicated to providing exceptional
