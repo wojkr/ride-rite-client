@@ -2,7 +2,7 @@ import { Box, Divider, Typography, useMediaQuery } from "@mui/material";
 import { useState } from "react";
 import { shades } from "../../theme";
 
-const Subscribe = () => {
+const About = () => {
   const [email, setEmail] = useState("");
   const isNonMobile = useMediaQuery("(min-width:1200px");
   return (
@@ -62,4 +62,4 @@ const Subscribe = () => {
   );
 };
 
-export default Subscribe;
+export default About;

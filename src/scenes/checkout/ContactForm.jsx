@@ -1,6 +1,6 @@
 import { Box, TextField, Typography } from "@mui/material";
 
-const Payment = ({
+const ContactForm = ({
   values,
   errors,
   touched,
@@ -45,4 +45,4 @@ const Payment = ({
   );
 };
 
-export default Payment;
+export default ContactForm;

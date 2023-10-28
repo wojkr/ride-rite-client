@@ -16,7 +16,6 @@ import { serverUrl } from "../../serverUrl";
 import { products } from "../../model/menu";
 
 const ItemDetails = () => {
-  // const products = menuData.products;
   const { itemId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
