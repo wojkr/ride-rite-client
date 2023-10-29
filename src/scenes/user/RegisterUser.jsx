@@ -52,57 +52,57 @@ const initialValues = {
 const checkoutSchema = [
   //  STEP ONE
   yup.object().shape({
-    username: yup.string().required("required"),
-    password: yup.string().required("required"),
+    username: yup.string().required("Required"),
+    password: yup.string().required("Required"),
     passwordConfirmation: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("required"),
-    email: yup.string().required("required"),
-    phoneNumber: yup.string().required("required"),
+      .required("Required"),
+    email: yup.string().required("Required"),
+    phoneNumber: yup.string().required("Required"),
   }),
   // STEP TWO
   yup.object().shape({
     billingAddress: yup.object().shape({
-      firstName: yup.string().required("required"),
-      lastName: yup.string().required("required"),
-      country: yup.string().required("required"),
-      buildingNumber: yup.string().required("required"),
-      street1: yup.string().required("required"),
+      firstName: yup.string().required("Required"),
+      lastName: yup.string().required("Required"),
+      country: yup.string().required("Required"),
+      buildingNumber: yup.string().required("Required"),
+      street1: yup.string().required("Required"),
       street2: yup.string(),
-      city: yup.string().required("required"),
-      postCode: yup.string().required("required"),
+      city: yup.string().required("Required"),
+      postCode: yup.string().required("Required"),
     }),
     shippingAddress: yup.object().shape({
       isSameAddress: yup.boolean(),
       firstName: yup.string().when("isSameAddress", {
         is: false,
-        then: () => yup.string().required("required"),
+        then: () => yup.string().required("Required"),
       }),
       lastName: yup.string().when("isSameAddress", {
         is: false,
-        then: () => yup.string().required("required"),
+        then: () => yup.string().required("Required"),
       }),
       country: yup.string().when("isSameAddress", {
         is: false,
-        then: () => yup.string().required("required"),
+        then: () => yup.string().required("Required"),
       }),
       buildingNumber: yup.string().when("isSameAddress", {
         is: false,
-        then: () => yup.string().required("required"),
+        then: () => yup.string().required("Required"),
       }),
       street1: yup.string().when("isSameAddress", {
         is: false,
-        then: () => yup.string().required("required"),
+        then: () => yup.string().required("Required"),
       }),
       street2: yup.string(),
       city: yup.string().when("isSameAddress", {
         is: false,
-        then: () => yup.string().required("required"),
+        then: () => yup.string().required("Required"),
       }),
       postCode: yup.string().when("isSameAddress", {
         is: false,
-        then: () => yup.string().required("required"),
+        then: () => yup.string().required("Required"),
       }),
     }),
   }),
@@ -191,14 +191,27 @@ const RegisterUser = () => {
             } else if (
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
-              errors.email = "Invalid email address!";
+              errors.email = "Invalid email address";
             }
 
             if (!values.phoneNumber) {
-              errors.phoneNumber = "required";
+              errors.phoneNumber = "Required";
             } else if (!/^[0-9\s()\/+-=]+$/.test(values.phoneNumber)) {
-              errors.phoneNumber = "Invalid Phone Number";
+              errors.phoneNumber = "Invalid phone number";
             }
+            if (!isFirstStep) {
+              if (!values.billingAddress.buildingNumber) {
+                errors.billingAddress = {};
+                errors.billingAddress.buildingNumber = "Required";
+              } else if (
+                !/^[0-9\s()\/+-=]+$/.test(values.billingAddress.buildingNumber)
+              ) {
+                errors.billingAddress = {};
+                errors.billingAddress.buildingNumber =
+                  "Invalid building number";
+              }
+            }
+            console.log(errors);
             return errors;
           }}
         >
