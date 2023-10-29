@@ -19,6 +19,7 @@
     "@mui/material": "^5.14.13",
     "@reduxjs/toolkit": "^1.9.7",
     "@stripe/stripe-js": "^2.1.7",
+    "axios": "^1.6.0",
     "browserify": "^17.0.0",
     "dotenv": "^16.3.1",
     "formik": "^2.4.5",

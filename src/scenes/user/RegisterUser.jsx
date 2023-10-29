@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   Box,
   Button,
@@ -14,8 +15,8 @@ import { shades } from "../../theme";
 import Shipping from "../checkout/Shipping";
 import ContactForm from "../checkout/ContactForm";
 import { loadStripe } from "@stripe/stripe-js";
-import { serverUrl } from "../../serverUrl";
 import Credentials from "./Credentials";
+import { serverUrl } from "../../serverUrl";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
@@ -53,7 +54,10 @@ const checkoutSchema = [
   //  STEP ONE
   yup.object().shape({
     username: yup.string().required("Required"),
-    password: yup.string().required("Required"),
+    password: yup
+      .string()
+      .min(6, "The password is too short (min: 6)")
+      .required("Required"),
     passwordConfirmation: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match")
@@ -116,7 +120,6 @@ const RegisterUser = () => {
   const isSecondStep = activeStep === 1;
 
   const handleFormSubmit = async (values, actions, errors) => {
-    console.log(values, actions, errors);
     setActiveStep(activeStep + 1);
 
     if (isSecondStep && values.shippingAddress.isSameAddress) {
@@ -133,31 +136,20 @@ const RegisterUser = () => {
   };
 
   const register = async (values) => {
-    console.log(values);
-    // const requestBody = {
-    //   userName: values.firstName values.lastName.join(""),
-    //   email: values.email,
-    //   products: cart.map(({ id, count }) => ({
-    //     id,
-    //     count,
-    //   })),
-    // };
-    // const stripe = await stripePromise;
-    // const requestBody = {
-    //   userName: [values.firstName, values.lastName].join(""),
-    //   email: values.email,
-    //   products: cart.map(({ id, count }) => ({
-    //     id,
-    //     count,
-    //   })),
-    // };
-    // const response = await fetch(`${serverUrl}/api/orders`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify(requestBody),
-    // });
-    // const session = await response.json();
-    // await stripe.redirectToCheckout({ sessionId: session.id });
+    delete values.passwordConfirmation;
+    const requestBody = {
+      ...values,
+    };
+
+    const data = await axios
+      .post(`${serverUrl}/api/auth/local/register`, requestBody)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.log("An error occurred:", error.response);
+      });
+    console.log(data);
   };
   return (
     <Box width={isNonMobile ? "80%" : "95%"} m="100px auto">
@@ -211,7 +203,6 @@ const RegisterUser = () => {
                   "Invalid building number";
               }
             }
-            console.log(errors);
             return errors;
           }}
         >

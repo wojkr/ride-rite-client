@@ -9,7 +9,7 @@ import CartMenu from "./scenes/global/CartMenu";
 import Menu from "./scenes/global/Menu";
 import Footer from "./scenes/global/Footer";
 import Error from "./scenes/global/Error";
-import RegisterUser from "./scenes/user/registerUser";
+import RegisterUser from "./scenes/user/RegisterUser";
 import User from "./scenes/user/User";
 import LoginUser from "./scenes/user/LoginUser";
 import { user } from "./model/menu";
