@@ -4,15 +4,10 @@ import { shades } from "../../theme";
 import logoImg from "../../assets/logo300x94.webp";
 import logoImgMini from "../../assets/logo100.webp";
 import { Link } from "react-router-dom";
-import { home } from "../../model/menu";
-// import menuData from "../../model/menu";
+import { home } from "../../Model/menu";
 
 const Footer = () => {
-  // const home = menuData.home;
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const {
-    palette: { neutral },
-  } = useTheme();
   return (
     <footer>
       <Box

@@ -13,7 +13,7 @@ import Item from "../../components/Item";
 import { setItems } from "../../state/cart";
 import { serverUrl } from "../../serverUrl";
 import { shades } from "../../theme";
-import { category as categoryModel } from "../../model/category";
+import { category as categoryModel } from "../../Model/category";
 
 const ShoppingList = ({ categoryId }) => {
   const dispatch = useDispatch();

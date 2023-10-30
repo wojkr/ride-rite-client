@@ -67,22 +67,15 @@ const AddressForm = ({
       <TextField
         fullWidth
         type="text"
-        // inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
         className={formattedName("buildingNumber")}
         label="Building Number"
         onBlur={handleBlur}
         onChange={handleChange}
         value={values.buildingNumber}
-        // name="buildingNumber"
         name={formattedName("buildingNumber")}
         error={formattedError("buildingNumber")}
         helperText={formattedHelper("buildingNumber")}
         sx={{ gridColumn: "span 2" }}
-        // value={values.email}
-        // name="email"
-        // error={!!touched.billingAddress.buildingNumber && !!errors.buildingNumber}
-        // helperText={touched.billingAddress.buildingNumber && errors.buildingNumber}
-        // sx={{ gridColumn: "span 4", marginBottom: "15px" }}
       />
       <TextField
         fullWidth

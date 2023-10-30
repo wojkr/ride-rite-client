@@ -7,7 +7,7 @@ import { setIsMenuOpen } from "../../state/menu";
 import { Link } from "react-router-dom";
 import { Collapse } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { menu } from "../../model/menu";
+import { menu } from "../../Model/menu";
 
 const FlexBox = styled(Box)`
   display: flex;

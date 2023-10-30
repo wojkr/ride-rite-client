@@ -39,7 +39,7 @@ const CartMenu = () => {
         !cartRef.current.contains(e.target) &&
         isCartOpen
       ) {
-        dispatch(setIsCartOpen(false));
+        dispatch(setIsCartOpen());
       }
     };
     document.addEventListener("mousedown", handleClickOutsideCart);

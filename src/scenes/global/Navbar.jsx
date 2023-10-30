@@ -12,7 +12,7 @@ import logoImgMini from "../../assets/logo100.webp";
 import { shades } from "../../theme";
 import { setIsCartOpen } from "../../state/cart";
 import { setIsMenuOpen } from "../../state/menu";
-import { home, user } from "../../model/menu";
+import { home, user } from "../../Model/menu";
 
 const Navbar = () => {
   const dispatch = useDispatch();

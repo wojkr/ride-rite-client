@@ -11,8 +11,8 @@ import pic2 from "../../assets/2.jpg";
 import pic3 from "../../assets/3.jpg";
 import pic4 from "../../assets/4.jpg";
 import pic5 from "../../assets/5.jpg";
-import { category } from "../../model/category";
-import { products } from "../../model/menu";
+import { category } from "../../Model/category";
+import { products } from "../../Model/menu";
 
 const DiscoverLink = styled(Link)({
   fontFamily: theme.typography.h4.fontFamily,

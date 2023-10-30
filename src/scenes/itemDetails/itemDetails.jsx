@@ -13,7 +13,7 @@ import Item from "../../components/Item";
 import { addToCart } from "../../state/cart";
 import { shades } from "../../theme";
 import { serverUrl } from "../../serverUrl";
-import { products } from "../../model/menu";
+import { products } from "../../Model/menu";
 
 const ItemDetails = () => {
   const { itemId } = useParams();

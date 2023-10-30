@@ -1,96 +1,17 @@
 import { Box, Button, StepLabel, Stepper, Step } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Formik } from "formik";
-import * as yup from "yup";
 import { useState } from "react";
 import { shades } from "../../theme";
 import Shipping from "./Shipping";
 import ContactForm from "./ContactForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { serverUrl } from "../../serverUrl";
+import { checkoutSchema, initialValues } from "../../Schemas/checkoutSchema";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
 );
-const initialValues = {
-  billingAddress: {
-    firstName: "",
-    lastName: "",
-    country: "",
-    buildingNumber: "",
-    street1: "",
-    street2: "",
-    city: "",
-    postCode: "",
-  },
-  shippingAddress: {
-    isSameAddress: true,
-    firstName: "",
-    lastName: "",
-    country: "",
-    buildingNumber: "",
-    street1: "",
-    street2: "",
-    city: "",
-    postCode: "",
-  },
-  email: "",
-  phoneNumber: "",
-};
-
-const checkoutSchema = [
-  //  STEP ONE
-  yup.object().shape({
-    billingAddress: yup.object().shape({
-      firstName: yup.string().required("Required"),
-      lastName: yup.string().required("Required"),
-      country: yup.string().required("Required"),
-      buildingNumber: yup.string().required("Required"),
-      street1: yup.string().required("Required"),
-      street2: yup.string(),
-      city: yup.string().required("Required"),
-      postCode: yup.string().required("Required"),
-    }),
-    shippingAddress: yup.object().shape({
-      isSameAddress: yup.boolean(),
-      firstName: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      lastName: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      country: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      buildingNumber: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      street1: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      street2: yup.string(),
-      city: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      postCode: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-    }),
-  }),
-
-  //  STEP TWO
-  yup.object().shape({
-    email: yup.string().required("Required"),
-    phoneNumber: yup.string().required("Required"),
-  }),
-];
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
