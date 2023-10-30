@@ -1,10 +1,8 @@
 import { Box, Typography, useMediaQuery, Button } from "@mui/material";
-import { useState } from "react";
 import { shades } from "../../theme";
-import { user, home, products } from "../../Model/menu";
+import { products } from "../../Model/menu";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { setLoggedOut } from "../../state/user";
 import ButtonLogin from "../../components/ButtonLogin";
 import ButtonRegister from "../../components/ButtonRegister";
 import ButtonLogout from "../../components/ButtonLogout";
