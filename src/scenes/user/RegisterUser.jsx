@@ -6,6 +6,7 @@ import {
   Stepper,
   Step,
   useMediaQuery,
+  Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
@@ -21,6 +22,8 @@ import { user } from "../../Model/menu";
 import { registerValidation } from "../../utils/registerValidation";
 import { registerSchema, initialValues } from "../../Schemas/registerSchema";
 import { useCookies } from "react-cookie";
+import { setLoggedIn } from "../../state/user";
+import { cookieName } from "../../Model/cookies";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
@@ -35,10 +38,10 @@ const RegisterUser = () => {
   const isFirstStep = activeStep === 0;
   const isSecondStep = activeStep === 1;
 
-  const [cookie, setCookie] = useCookies(["jwt_token"]);
+  const [cookie, setCookie] = useCookies([cookieName]);
   const saveJWT = (jwt) => {
     const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
-    setCookie("jwt_token", jwt, {
+    setCookie(cookieName, jwt, {
       expires: expireDate,
       path: "/",
       secure: true,
@@ -75,6 +78,7 @@ const RegisterUser = () => {
     await axios
       .post(`${serverUrl}/api/auth/local/register`, requestBody)
       .then((response) => {
+        console.log(response);
         saveJWT(response.data.jwt);
         saveUser(response.data.user);
       })
@@ -84,6 +88,22 @@ const RegisterUser = () => {
   };
   return (
     <Box width={isNonMobile ? "80%" : "95%"} m="100px auto">
+      <Typography
+        variant="h2"
+        fontWeight="bold"
+        lineHeight="150%"
+        color={shades.neutral[600]}
+      >
+        Sign Up
+      </Typography>
+      <Typography
+        variant="h3"
+        fontWeight="bold"
+        lineHeight="150%"
+        color={shades.neutral[600]}
+      >
+        To order quicker!
+      </Typography>
       <Stepper activeStep={activeStep} sx={{ m: "20px 0" }}>
         <Step>
           <StepLabel>

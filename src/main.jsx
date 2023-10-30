@@ -12,6 +12,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./state/cart";
 import menuReducer from "./state/menu";
 import userReducer from "./state/user";
+import SetUserFromCookie from "./utils/SetUserFromCookie";
 
 const store = configureStore({
   reducer: { cart: cartReducer, menu: menuReducer, user: userReducer },
@@ -24,6 +25,7 @@ root.render(
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <App />
+        <SetUserFromCookie />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>

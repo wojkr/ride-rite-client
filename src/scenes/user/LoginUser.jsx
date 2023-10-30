@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   Box,
   Button,
+  Container,
   Divider,
   TextField,
   Typography,
@@ -16,6 +17,8 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { user } from "../../Model/menu";
 import { loginValidation } from "../../utils/loginValidation";
+import ButtonRegister from "../../components/ButtonRegister";
+import { cookieName } from "../../Model/cookies";
 
 const initialValues = {
   email: "",
@@ -26,19 +29,18 @@ const User = () => {
   const isNonMobile = useMediaQuery("(min-width:1200px");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user: userState, isLoggedIn } = useSelector((state) => state.user);
+  const { isLoggedIn } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (isLoggedIn) navigate(user.link());
   }, [isLoggedIn]);
 
-  const [cookie, setCookie] = useCookies(["jwt_token"]);
+  const [cookie, setCookie] = useCookies([cookieName]);
   const saveJWT = (jwt) => {
     const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
-    setCookie("jwt_token", jwt, {
+    setCookie(cookieName, jwt, {
       expires: expireDate,
       path: "/",
-      secure: true,
     });
   };
   const saveUser = (user) => dispatch(setLoggedIn(user));
@@ -46,7 +48,7 @@ const User = () => {
   const handleFormSubmit = async (values) => {
     console.log(values);
     // Request API.
-    const user = await axios
+    await axios
       .post("http://localhost:1337/api/auth/local", {
         identifier: values.email,
         password: values.password,
@@ -64,42 +66,31 @@ const User = () => {
   return (
     <Box
       id="User"
+      padding="80px 0"
       style={{
         background: `linear-gradient(0deg, ${shades.neutral[100] + "00"}, ${
           shades.neutral[100]
         })`,
       }}
     >
-      <Box
-        width="80%"
-        padding="80px 0"
-        margin="0 auto"
-        display="flex"
-        flexDirection={isNonMobile ? "row" : "column"}
-        justifyContent="space-evenly"
-        alignItems="baseline"
-        gap={isNonMobile ? "5rem" : "1rem"}
-      >
-        <Box flex="5" paddingLeft={isNonMobile && "10%"} width="80%">
-          <Typography
-            variant="h2"
-            fontWeight="bold"
-            lineHeight="150%"
-            color={shades.neutral[600]}
-          >
-            Log in
-          </Typography>
-          <Typography
-            variant="h3"
-            fontWeight="bold"
-            lineHeight="150%"
-            color={shades.neutral[600]}
-          >
-            {" "}
-            To be ready for shopping!
-          </Typography>
-        </Box>
-        <Typography sx={{ mb: "15px" }} fontSize="18px">
+      <Container maxWidth="sm">
+        <Typography
+          variant="h2"
+          fontWeight="bold"
+          lineHeight="150%"
+          color={shades.neutral[600]}
+        >
+          Log in
+        </Typography>
+        <Typography
+          variant="h3"
+          fontWeight="bold"
+          lineHeight="150%"
+          color={shades.neutral[600]}
+        >
+          To be ready for shopping!
+        </Typography>
+        <Typography sx={{ mt: "3rem", mb: "15px" }} fontSize="18px">
           Login Credentials
         </Typography>
         <Formik
@@ -159,8 +150,19 @@ const User = () => {
             </form>
           )}
         </Formik>
-      </Box>
-      <Divider sx={{ background: shades.neutral[300] }} />
+        <Box
+          display="flex"
+          flexDirection={isNonMobile ? "row" : "column"}
+          justifyContent="center"
+          alignItems="center"
+          marginTop="2rem"
+        >
+          <Typography variant="h6" paddingX="0.5rem">
+            Dont have an account?
+          </Typography>
+          <ButtonRegister marginTop={isNonMobile ? 0 : "0.5rem"} />
+        </Box>
+      </Container>
     </Box>
   );
 };

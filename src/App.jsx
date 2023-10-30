@@ -48,6 +48,7 @@ function App() {
         <CartMenu />
         <Menu />
         <Footer />
+        {/* utils */}
       </HashRouter>
     </div>
   );

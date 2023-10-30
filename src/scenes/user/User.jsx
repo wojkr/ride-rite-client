@@ -3,15 +3,14 @@ import { useState } from "react";
 import { shades } from "../../theme";
 import { user, home, products } from "../../Model/menu";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoggedOut } from "../../state/user";
+import ButtonLogin from "../../components/ButtonLogin";
+import ButtonRegister from "../../components/ButtonRegister";
+import ButtonLogout from "../../components/ButtonLogout";
 
 const User = () => {
-  const [email, setEmail] = useState("");
-  const [cookie, removeCookie] = useCookies(["jwt_token"]);
   const { user: userState, isLoggedIn } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const isNonMobile = useMediaQuery("(min-width:1200px");
@@ -56,7 +55,6 @@ const User = () => {
             <>
               <Button
                 variant="contained"
-                // href={user.register.link()}
                 onClick={() => {
                   navigate(products.link());
                 }}
@@ -71,53 +69,12 @@ const User = () => {
               >
                 Yes!
               </Button>
-              <Button
-                variant="contained"
-                // href={user.register.link()}
-                onClick={() => {
-                  console.log(removeCookie("jwt_token"));
-                  dispatch(setLoggedOut());
-                  navigate(home.link());
-                }}
-                sx={{
-                  marginTop: "1rem",
-                  backgroundColor: shades.secondary[400],
-                  color: "black",
-                  "&:hover": { backgroundColor: shades.secondary[300] },
-                }}
-              >
-                Logout
-              </Button>
+              <ButtonLogout />
             </>
           ) : (
             <>
-              <Button
-                variant="contained"
-                // href={user.register.link()}
-                onClick={() => navigate(user.login.link())}
-                sx={{
-                  marginTop: "1rem",
-                  backgroundColor: shades.secondary[400],
-                  color: "black",
-                  "&:hover": { backgroundColor: shades.secondary[300] },
-                }}
-              >
-                Yes! I have an account
-              </Button>
-              <Button
-                variant="contained"
-                // href={user.register.link()}
-                onClick={() => navigate(user.register.link())}
-                sx={{
-                  display: "block",
-                  marginTop: "1rem",
-                  backgroundColor: shades.neutral[600],
-                  color: "white",
-                  "&:hover": { backgroundColor: shades.neutral[700] },
-                }}
-              >
-                I do not have an account
-              </Button>
+              <ButtonLogin text="Yes! I have an account" />
+              <ButtonRegister text="I do not have an account" />
             </>
           )}
         </Box>
