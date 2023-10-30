@@ -1,13 +1,14 @@
 import { Box, Button, StepLabel, Stepper, Step } from "@mui/material";
 import { useSelector } from "react-redux";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { shades } from "../../theme";
 import Shipping from "./Shipping";
 import ContactForm from "./ContactForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { serverUrl } from "../../serverUrl";
 import { checkoutSchema, userValues } from "../../Schemas/checkoutSchema";
+import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
@@ -17,9 +18,12 @@ const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const cart = useSelector((state) => state.cart.cart);
   const user = useSelector((state) => state.user.user);
+  const navigate = useNavigate();
   const isFirstStep = activeStep === 0;
   const isSecondStep = activeStep === 1;
+
   const handleFormSubmit = async (values, actions) => {
+    if (cart.length < 1) navigate("/");
     setActiveStep(activeStep + 1);
 
     if (isFirstStep && values.shippingAddress.isSameAddress) {
@@ -38,8 +42,9 @@ const Checkout = () => {
   const makePayment = async (values) => {
     const stripe = await stripePromise;
     const requestBody = {
-      userName: [values.firstName, values.lastName].join(""),
+      fullName: `${values.billingAddress.firstName} ${values.billingAddress.lastName}`,
       email: values.email,
+      userId: user?.id,
       products: cart.map(({ id, count }) => ({
         id,
         count,
@@ -53,7 +58,12 @@ const Checkout = () => {
     const session = await response.json();
     await stripe.redirectToCheckout({ sessionId: session.id });
   };
-
+  //redirection when carts empty
+  useEffect(() => {
+    if (cart.length < 1) {
+      navigate("/");
+    }
+  }, [cart]);
   return (
     <Box width="80%" m="100px auto">
       <Stepper activeStep={activeStep} sx={{ m: "20px 0" }}>
