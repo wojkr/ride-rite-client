@@ -78,7 +78,7 @@ const Order = ({ order }) => {
         </Box>
         <Divider sx={{ background: shades.neutral[100], marginTop: "1rem" }} />
         <Typography fontWeight="bold" textAlign="right" padding="1rem">
-          total: £{totalPrice}
+          total: £{parseInt(totalPrice * 100) / 100}
         </Typography>
       </Box>
     </Box>
