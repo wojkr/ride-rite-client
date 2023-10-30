@@ -7,7 +7,7 @@ import Shipping from "./Shipping";
 import ContactForm from "./ContactForm";
 import { loadStripe } from "@stripe/stripe-js";
 import { serverUrl } from "../../serverUrl";
-import { checkoutSchema, initialValues } from "../../Schemas/checkoutSchema";
+import { checkoutSchema, userValues } from "../../Schemas/checkoutSchema";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
@@ -16,9 +16,9 @@ const stripePromise = loadStripe(
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const cart = useSelector((state) => state.cart.cart);
+  const user = useSelector((state) => state.user.user);
   const isFirstStep = activeStep === 0;
   const isSecondStep = activeStep === 1;
-
   const handleFormSubmit = async (values, actions) => {
     setActiveStep(activeStep + 1);
 
@@ -70,7 +70,8 @@ const Checkout = () => {
       <Box>
         <Formik
           onSubmit={handleFormSubmit}
-          initialValues={initialValues}
+          initialValues={userValues(user)}
+          enableReinitialize={true}
           validationSchema={checkoutSchema[activeStep]}
           validate={(values) => {
             const errors = {};
@@ -126,7 +127,6 @@ const Checkout = () => {
                   setFieldValue={setFieldValue}
                 />
               )}
-
               {/* SECOND STEP */}
               {isSecondStep && (
                 <ContactForm
@@ -139,7 +139,6 @@ const Checkout = () => {
                   setFieldValue={setFieldValue}
                 />
               )}
-
               {/* NAVIGATION BUTTONS */}
               <Box display="flex" justifyContent="space-between" gap="50px">
                 {isSecondStep && (

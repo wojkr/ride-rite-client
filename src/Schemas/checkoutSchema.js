@@ -79,4 +79,14 @@ const initialValues = {
   phoneNumber: "",
 };
 
-export { checkoutSchema, initialValues };
+const userValues = (user) => {
+  const {
+    billingAddress = initialValues.billingAddress,
+    shippingAddress = initialValues.shippingAddress,
+    email = "",
+    phoneNumber = "",
+  } = user;
+  return { billingAddress, shippingAddress, email, phoneNumber };
+};
+
+export { checkoutSchema, initialValues, userValues };
