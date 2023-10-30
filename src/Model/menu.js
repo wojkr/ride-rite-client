@@ -62,5 +62,12 @@ const user = {
     return "/" + this.linkText;
   },
 };
+const item = {
+  title: "Item",
+  linkText: "item",
+  link: function () {
+    return preHash + this.linkText;
+  },
+};
 const menu = [home, about, products, subscribe, ourstores];
-export { home, about, products, subscribe, ourstores, user, menu };
+export { home, about, products, subscribe, ourstores, user, menu, item };

@@ -1,48 +1,46 @@
-import { Box, Typography, useMediaQuery, Button } from "@mui/material";
+import { Box, Typography, useMediaQuery, Button, Divider } from "@mui/material";
 import { shades } from "../../theme";
 import { products } from "../../Model/menu";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ButtonLogin from "../../components/ButtonLogin";
 import ButtonRegister from "../../components/ButtonRegister";
 import ButtonLogout from "../../components/ButtonLogout";
+import Orders from "./Orders";
 
 const User = () => {
-  const { user: userState, isLoggedIn } = useSelector((state) => state.user);
+  const { user, isLoggedIn } = useSelector((state) => state.user);
   const navigate = useNavigate();
-
   const isNonMobile = useMediaQuery("(min-width:1200px");
   return (
-    <Box
-      id="User"
-      style={{
-        background: `linear-gradient(0deg, ${shades.neutral[100] + "00"}, ${
-          shades.neutral[100]
-        })`,
-      }}
-    >
+    <>
       <Box
-        width="80%"
-        padding="80px 0"
-        margin="0 auto"
-        display="flex"
-        flexDirection={isNonMobile ? "row" : "column"}
-        justifyContent="space-evenly"
-        alignItems="baseline"
-        gap={isNonMobile ? "5rem" : "1rem"}
+        id="User"
+        style={{
+          background: `linear-gradient(0deg, ${shades.neutral[100] + "00"}, ${
+            shades.neutral[100]
+          })`,
+        }}
       >
-        <Box flex="5" paddingLeft={isNonMobile && "10%"} width="80%">
+        <Box
+          width="80%"
+          padding="120px 0"
+          margin="0 auto"
+          display="flex"
+          flexDirection={isNonMobile ? "row" : "column"}
+          justifyContent="space-evenly"
+          alignItems="baseline"
+        >
           <Typography
             variant="h2"
             fontWeight="bold"
             lineHeight="150%"
             color={shades.neutral[600]}
           >
-            Hello {userState.username || "Stranger"}!
+            Hello {user.username || "Stranger"}!
           </Typography>
           <Typography
             variant="h3"
-            fontWeight="bold"
             lineHeight="150%"
             color={shades.neutral[600]}
           >
@@ -76,14 +74,10 @@ const User = () => {
             </>
           )}
         </Box>
-        <Box flex="7">
-          <Typography
-            color={shades.neutral[800]}
-            lineHeight="225%"
-          ></Typography>
-        </Box>
       </Box>
-    </Box>
+      <Divider sx={{ borderColor: shades.neutral[600], width: "100%" }} />
+      {user?.orders?.length > 0 && <Orders orders={user.orders} />}
+    </>
   );
 };
 
