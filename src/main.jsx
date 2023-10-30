@@ -11,9 +11,10 @@ import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./state/cart";
 import menuReducer from "./state/menu";
+import userReducer from "./state/user";
 
 const store = configureStore({
-  reducer: { cart: cartReducer, menu: menuReducer },
+  reducer: { cart: cartReducer, menu: menuReducer, user: userReducer },
 });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

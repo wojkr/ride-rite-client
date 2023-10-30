@@ -12,7 +12,7 @@ import Error from "./scenes/global/Error";
 import RegisterUser from "./scenes/user/RegisterUser";
 import User from "./scenes/user/User";
 import LoginUser from "./scenes/user/LoginUser";
-import { user } from "./model/menu";
+import { user } from "./Model/menu";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
