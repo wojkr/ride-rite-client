@@ -7,117 +7,44 @@ import {
   Step,
   useMediaQuery,
 } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik } from "formik";
-import * as yup from "yup";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { shades } from "../../theme";
 import Shipping from "../checkout/Shipping";
 import ContactForm from "../checkout/ContactForm";
 import { loadStripe } from "@stripe/stripe-js";
 import Credentials from "./Credentials";
 import { serverUrl } from "../../serverUrl";
+import { useNavigate } from "react-router-dom";
+import { user } from "../../Model/menu";
+import { registerValidation } from "../../utils/registerValidation";
+import { registerSchema, initialValues } from "../../Schemas/registerSchema";
+import { useCookies } from "react-cookie";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
 );
-const initialValues = {
-  billingAddress: {
-    firstName: "",
-    lastName: "",
-    country: "",
-    buildingNumber: "",
-    street1: "",
-    street2: "",
-    city: "",
-    postCode: "",
-  },
-  shippingAddress: {
-    isSameAddress: true,
-    firstName: "",
-    lastName: "",
-    country: "",
-    buildingNumber: "",
-    street1: "",
-    street2: "",
-    city: "",
-    postCode: "",
-  },
-  username: "",
-  password: "",
-  passwordConfirmation: "",
-  email: "",
-  phoneNumber: "",
-};
-
-const checkoutSchema = [
-  //  STEP ONE
-  yup.object().shape({
-    username: yup.string().required("Required"),
-    password: yup
-      .string()
-      .min(6, "The password is too short (min: 6)")
-      .required("Required"),
-    passwordConfirmation: yup
-      .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match")
-      .required("Required"),
-    email: yup.string().required("Required"),
-    phoneNumber: yup.string().required("Required"),
-  }),
-  // STEP TWO
-  yup.object().shape({
-    billingAddress: yup.object().shape({
-      firstName: yup.string().required("Required"),
-      lastName: yup.string().required("Required"),
-      country: yup.string().required("Required"),
-      buildingNumber: yup.string().required("Required"),
-      street1: yup.string().required("Required"),
-      street2: yup.string(),
-      city: yup.string().required("Required"),
-      postCode: yup.string().required("Required"),
-    }),
-    shippingAddress: yup.object().shape({
-      isSameAddress: yup.boolean(),
-      firstName: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      lastName: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      country: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      buildingNumber: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      street1: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      street2: yup.string(),
-      city: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-      postCode: yup.string().when("isSameAddress", {
-        is: false,
-        then: () => yup.string().required("Required"),
-      }),
-    }),
-  }),
-];
 
 const RegisterUser = () => {
+  const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
-  const cart = useSelector((state) => state.cart.cart);
+  const { isLoggedIn } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const isNonMobile = useMediaQuery("(min-width:600px");
   const isFirstStep = activeStep === 0;
   const isSecondStep = activeStep === 1;
+
+  const [cookie, setCookie] = useCookies(["jwt_token"]);
+  const saveJWT = (jwt) => {
+    const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+    setCookie("jwt_token", jwt, {
+      expires: expireDate,
+      path: "/",
+      secure: true,
+    });
+  };
+  const saveUser = (user) => dispatch(setLoggedIn(user));
 
   const handleFormSubmit = async (values, actions, errors) => {
     setActiveStep(activeStep + 1);
@@ -135,21 +62,25 @@ const RegisterUser = () => {
     actions.setTouched({});
   };
 
+  useEffect(() => {
+    if (isLoggedIn) navigate(user.link());
+  }, [isLoggedIn]);
+
   const register = async (values) => {
     delete values.passwordConfirmation;
     const requestBody = {
       ...values,
     };
 
-    const data = await axios
+    await axios
       .post(`${serverUrl}/api/auth/local/register`, requestBody)
       .then((response) => {
-        return response.data;
+        saveJWT(response.data.jwt);
+        saveUser(response.data.user);
       })
       .catch((error) => {
         console.log("An error occurred:", error.response);
       });
-    console.log(data);
   };
   return (
     <Box width={isNonMobile ? "80%" : "95%"} m="100px auto">
@@ -174,37 +105,8 @@ const RegisterUser = () => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}
-          validationSchema={checkoutSchema[activeStep]}
-          validate={(values) => {
-            const errors = {};
-
-            if (!values.email) {
-              errors.email = "required";
-            } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-            ) {
-              errors.email = "Invalid email address";
-            }
-
-            if (!values.phoneNumber) {
-              errors.phoneNumber = "Required";
-            } else if (!/^[0-9\s()\/+-=]+$/.test(values.phoneNumber)) {
-              errors.phoneNumber = "Invalid phone number";
-            }
-            if (!isFirstStep) {
-              if (!values.billingAddress.buildingNumber) {
-                errors.billingAddress = {};
-                errors.billingAddress.buildingNumber = "Required";
-              } else if (
-                !/^[0-9\s()\/+-=]+$/.test(values.billingAddress.buildingNumber)
-              ) {
-                errors.billingAddress = {};
-                errors.billingAddress.buildingNumber =
-                  "Invalid building number";
-              }
-            }
-            return errors;
-          }}
+          validationSchema={registerSchema[activeStep]}
+          validate={(values) => registerValidation(values, isFirstStep)}
         >
           {({
             values,

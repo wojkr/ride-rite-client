@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   Box,
   Button,
@@ -8,15 +9,58 @@ import {
 } from "@mui/material";
 import { Formik } from "formik";
 import { shades } from "../../theme";
+import { useCookies } from "react-cookie";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoggedIn } from "../../state/user";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { user } from "../../Model/menu";
+import { loginValidation } from "../../utils/loginValidation";
+
 const initialValues = {
   email: "",
   password: "",
 };
+
 const User = () => {
   const isNonMobile = useMediaQuery("(min-width:1200px");
-  const handleFormSubmit = async (values, actions, errors) => {
-    console.log(values);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user: userState, isLoggedIn } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (isLoggedIn) navigate(user.link());
+  }, [isLoggedIn]);
+
+  const [cookie, setCookie] = useCookies(["jwt_token"]);
+  const saveJWT = (jwt) => {
+    const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+    setCookie("jwt_token", jwt, {
+      expires: expireDate,
+      path: "/",
+      secure: true,
+    });
   };
+  const saveUser = (user) => dispatch(setLoggedIn(user));
+
+  const handleFormSubmit = async (values) => {
+    console.log(values);
+    // Request API.
+    const user = await axios
+      .post("http://localhost:1337/api/auth/local", {
+        identifier: values.email,
+        password: values.password,
+      })
+      .then((response) => {
+        saveJWT(response.data.jwt);
+        saveUser(response.data.user);
+      })
+      .catch((error) => {
+        // Handle error.
+        console.log("An error occurred:", error.response);
+      });
+  };
+
   return (
     <Box
       id="User"
@@ -61,19 +105,7 @@ const User = () => {
         <Formik
           onSubmit={handleFormSubmit}
           initialValues={initialValues}
-          validate={(values) => {
-            const errors = {};
-
-            if (!values.email) {
-              errors.email = "required";
-            } else if (
-              !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-            ) {
-              errors.email = "Invalid email address!";
-            }
-
-            return errors;
-          }}
+          validate={(values) => loginValidation(values)}
         >
           {({
             values,

@@ -1,12 +1,19 @@
 import { Box, Typography, useMediaQuery, Button } from "@mui/material";
 import { useState } from "react";
 import { shades } from "../../theme";
-import { user } from "../../model/menu";
+import { user, home, products } from "../../Model/menu";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoggedOut } from "../../state/user";
 
 const User = () => {
   const [email, setEmail] = useState("");
+  const [cookie, removeCookie] = useCookies(["jwt_token"]);
+  const { user: userState, isLoggedIn } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const isNonMobile = useMediaQuery("(min-width:1200px");
   return (
     <Box
@@ -34,7 +41,7 @@ const User = () => {
             lineHeight="150%"
             color={shades.neutral[600]}
           >
-            Hello User!
+            Hello {userState.username || "Stranger"}!
           </Typography>
           <Typography
             variant="h3"
@@ -45,39 +52,80 @@ const User = () => {
             {" "}
             Are you ready to get a new bicycle?
           </Typography>
-
-          <Button
-            variant="contained"
-            // href={user.register.link()}
-            onClick={() => navigate(user.login.link())}
-            sx={{
-              marginTop: "1rem",
-              backgroundColor: shades.secondary[400],
-              color: "black",
-              "&:hover": { backgroundColor: shades.secondary[300] },
-            }}
-          >
-            Yes! I have an account
-          </Button>
-          <Button
-            variant="contained"
-            // href={user.register.link()}
-            onClick={() => navigate(user.register.link())}
-            sx={{
-              display: "block",
-              marginTop: "1rem",
-              backgroundColor: shades.neutral[600],
-              color: "white",
-              "&:hover": { backgroundColor: shades.neutral[700] },
-            }}
-          >
-            I do not have an account
-          </Button>
+          {isLoggedIn ? (
+            <>
+              <Button
+                variant="contained"
+                // href={user.register.link()}
+                onClick={() => {
+                  navigate(products.link());
+                }}
+                sx={{
+                  display: "block",
+                  marginTop: "1rem",
+                  paddingX: "2rem",
+                  backgroundColor: shades.neutral[600],
+                  color: "white",
+                  "&:hover": { backgroundColor: shades.neutral[700] },
+                }}
+              >
+                Yes!
+              </Button>
+              <Button
+                variant="contained"
+                // href={user.register.link()}
+                onClick={() => {
+                  console.log(removeCookie("jwt_token"));
+                  dispatch(setLoggedOut());
+                  navigate(home.link());
+                }}
+                sx={{
+                  marginTop: "1rem",
+                  backgroundColor: shades.secondary[400],
+                  color: "black",
+                  "&:hover": { backgroundColor: shades.secondary[300] },
+                }}
+              >
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="contained"
+                // href={user.register.link()}
+                onClick={() => navigate(user.login.link())}
+                sx={{
+                  marginTop: "1rem",
+                  backgroundColor: shades.secondary[400],
+                  color: "black",
+                  "&:hover": { backgroundColor: shades.secondary[300] },
+                }}
+              >
+                Yes! I have an account
+              </Button>
+              <Button
+                variant="contained"
+                // href={user.register.link()}
+                onClick={() => navigate(user.register.link())}
+                sx={{
+                  display: "block",
+                  marginTop: "1rem",
+                  backgroundColor: shades.neutral[600],
+                  color: "white",
+                  "&:hover": { backgroundColor: shades.neutral[700] },
+                }}
+              >
+                I do not have an account
+              </Button>
+            </>
+          )}
         </Box>
         <Box flex="7">
-          <Typography color={shades.neutral[800]} lineHeight="225%">
-            User details, Login btn or register
-          </Typography>
+          <Typography
+            color={shades.neutral[800]}
+            lineHeight="225%"
+          ></Typography>
         </Box>
       </Box>
     </Box>
