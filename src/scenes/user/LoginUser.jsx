@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Container,
-  Divider,
   TextField,
   Typography,
   useMediaQuery,
@@ -46,10 +45,9 @@ const User = () => {
   const saveUser = (user) => dispatch(setLoggedIn(user));
 
   const handleFormSubmit = async (values) => {
-    console.log(values);
     // Request API.
     await axios
-      .post("http://localhost:1337/api/auth/local", {
+      .post(`${clientUrl}/api/auth/local`, {
         identifier: values.email,
         password: values.password,
       })
