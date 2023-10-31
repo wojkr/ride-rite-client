@@ -11,12 +11,15 @@ const getParams = (queryString) => {
 
   return { severity, message };
 };
+
 const FlashMessage = () => {
   const location = useLocation();
-  const { severity, message } = getParams(location.search);
+  const [message, setMessage] = useState(getParams(location.search).message);
+  const [severity, setSeverity] = useState(getParams(location.search).severity);
   const [showFlash, setShowFlash] = useState(message && severity);
+
   useEffect(() => {
-    const { severity, message } = getParams(location.search);
+    const { message, severity } = getParams(location.search);
     setShowFlash(message && severity);
   }, [location.search]);
   return (
@@ -25,6 +28,10 @@ const FlashMessage = () => {
         <Alert
           severity={severity}
           onClose={() => {
+            window.location.href = window.location.href.replace(
+              location.search,
+              ""
+            );
             setShowFlash(false);
           }}
         >
