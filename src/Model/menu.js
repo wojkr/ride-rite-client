@@ -66,7 +66,7 @@ const item = {
   title: "Item",
   linkText: "item",
   link: function () {
-    return preHash + this.linkText;
+    return "/" + this.linkText;
   },
 };
 const menu = [home, about, products, subscribe, ourstores];

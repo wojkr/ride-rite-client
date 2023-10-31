@@ -24,6 +24,7 @@ import { registerSchema, initialValues } from "../../Schemas/registerSchema";
 import { useCookies } from "react-cookie";
 import { setLoggedIn } from "../../state/user";
 import { cookieName } from "../../Model/cookies";
+import FlashMessage from "../../components/FlashMessage";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
@@ -67,7 +68,7 @@ const RegisterUser = () => {
 
   useEffect(() => {
     if (isLoggedIn) navigate(user.link());
-  }, [isLoggedIn]);
+  }, []);
 
   const register = async (values) => {
     delete values.passwordConfirmation;
@@ -78,12 +79,18 @@ const RegisterUser = () => {
     await axios
       .post(`${serverUrl}/api/auth/local/register`, requestBody)
       .then((response) => {
-        console.log(response);
-        saveJWT(response.data.jwt);
         saveUser(response.data.user);
+        saveJWT(response.data.jwt);
+        const message = "You have successfully signed up!";
+        const severity = "success";
+        navigate(`${user.link()}?severity=${severity}&message=${message}`);
       })
       .catch((error) => {
-        console.log("An error occurred:", error.response);
+        const severity = "error";
+        setActiveStep(0);
+        navigate(
+          `?severity=${severity}&message=${error.response.data.error.message}`
+        );
       });
   };
   return (
@@ -104,6 +111,7 @@ const RegisterUser = () => {
       >
         To order quicker!
       </Typography>
+      <FlashMessage />
       <Stepper activeStep={activeStep} sx={{ m: "20px 0" }}>
         <Step>
           <StepLabel>

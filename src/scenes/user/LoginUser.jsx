@@ -18,7 +18,7 @@ import { user } from "../../Model/menu";
 import { loginValidation } from "../../utils/loginValidation";
 import ButtonRegister from "../../components/ButtonRegister";
 import { cookieName } from "../../Model/cookies";
-
+import { serverUrl } from "../../serverUrl";
 const initialValues = {
   email: "",
   password: "",
@@ -32,7 +32,7 @@ const User = () => {
 
   useEffect(() => {
     if (isLoggedIn) navigate(user.link());
-  }, [isLoggedIn]);
+  }, []);
 
   const [cookie, setCookie] = useCookies([cookieName]);
   const saveJWT = (jwt) => {
@@ -47,17 +47,24 @@ const User = () => {
   const handleFormSubmit = async (values) => {
     // Request API.
     await axios
-      .post(`${clientUrl}/api/auth/local`, {
+      .post(`${serverUrl}/api/auth/local`, {
         identifier: values.email,
         password: values.password,
       })
       .then((response) => {
-        saveJWT(response.data.jwt);
         saveUser(response.data.user);
+        saveJWT(response.data.jwt);
+        const message = "Welcome back! You're now logged in.";
+        const severity = "success";
+        navigate(`${user.link()}?severity=${severity}&message=${message}`);
       })
       .catch((error) => {
         // Handle error.
-        console.log("An error occurred:", error.response);
+        console.log("An error occurred:", error.message);
+        const severity = "error";
+        navigate(
+          `${user.link()}?severity=${severity}&message=${error.message}`
+        );
       });
   };
 

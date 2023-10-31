@@ -52,7 +52,7 @@ const Order = ({ order }) => {
                       backgroundColor: shades.neutral[200],
                     }}
                     src={`${serverUrl}${item?.attributes?.image?.data?.attributes?.formats?.medium?.url}`}
-                    onClick={() => navigate(`${itemPath}/${item.id}`)}
+                    onClick={() => navigate(`${itemPath.link()}/${item.id}`)}
                   />
                   <Box
                     display="flex"

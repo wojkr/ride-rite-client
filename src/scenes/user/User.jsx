@@ -1,4 +1,4 @@
-import { Box, Typography, useMediaQuery, Button, Divider } from "@mui/material";
+import { Box, Typography, Button, Divider } from "@mui/material";
 import { shades } from "../../theme";
 import { products } from "../../Model/menu";
 import { useNavigate } from "react-router-dom";
@@ -6,12 +6,12 @@ import { useSelector } from "react-redux";
 import ButtonLogin from "../../components/ButtonLogin";
 import ButtonRegister from "../../components/ButtonRegister";
 import ButtonLogout from "../../components/ButtonLogout";
+import FlashMessage from "../../components/FlashMessage";
 import Orders from "./Orders";
 
 const User = () => {
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const isNonMobile = useMediaQuery("(min-width:1200px");
   return (
     <>
       <Box
@@ -27,10 +27,11 @@ const User = () => {
           padding="120px 0"
           margin="0 auto"
           display="flex"
-          flexDirection={isNonMobile ? "row" : "column"}
+          flexDirection={"column"}
           justifyContent="space-evenly"
           alignItems="baseline"
         >
+          <FlashMessage />
           <Typography
             variant="h2"
             fontWeight="bold"

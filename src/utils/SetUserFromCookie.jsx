@@ -4,17 +4,17 @@ import { setLoggedIn } from "../state/user";
 import { serverUrl } from "../serverUrl";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 
 const SetUserFromCookie = () => {
   const [cookie] = useCookies([cookieName]);
   const dispatch = useDispatch();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!!cookie[cookieName] && cookie[cookieName] != "undefined") {
       getUser(cookie[cookieName]);
     }
-  }, [cookie]);
+  }, []);
   async function getUser(token) {
     await axios
       .get(
