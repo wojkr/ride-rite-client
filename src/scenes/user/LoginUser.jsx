@@ -47,12 +47,16 @@ const User = () => {
   const handleFormSubmit = async (values) => {
     // Request API.
     await axios
-      .post(`${serverUrl}/api/auth/local`, {
-        identifier: values.email,
-        password: values.password,
-      })
+      .post(
+        `${serverUrl}/api/auth/local?populate=billingAddress&populate=shippingAddress&populate=orders`,
+        {
+          identifier: values.email,
+          password: values.password,
+        }
+      )
       .then((response) => {
         saveUser(response.data.user);
+        console.log(response.data.user);
         saveJWT(response.data.jwt);
         const message = "Welcome back! You're now logged in.";
         const severity = "success";

@@ -12,6 +12,7 @@ import Orders from "./Orders";
 const User = () => {
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  console.log(user.orders);
   return (
     <>
       <Box
@@ -76,8 +77,12 @@ const User = () => {
           )}
         </Box>
       </Box>
-      <Divider sx={{ borderColor: shades.neutral[600], width: "100%" }} />
-      {user?.orders?.length > 0 && <Orders orders={user.orders} />}
+      {isLoggedIn && user?.orders && (
+        <>
+          <Divider sx={{ borderColor: shades.neutral[600], width: "100%" }} />
+          <Orders orders={user?.orders} />
+        </>
+      )}
     </>
   );
 };
