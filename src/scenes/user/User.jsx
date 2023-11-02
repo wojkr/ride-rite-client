@@ -12,7 +12,6 @@ import Orders from "./Orders";
 const User = () => {
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  console.log(user.orders);
   return (
     <>
       <Box
