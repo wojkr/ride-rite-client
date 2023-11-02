@@ -56,7 +56,6 @@ const User = () => {
       )
       .then((response) => {
         saveUser(response.data.user);
-        console.log(response.data.user);
         saveJWT(response.data.jwt);
         const message = "Welcome back! You're now logged in.";
         const severity = "success";
@@ -97,7 +96,7 @@ const User = () => {
           lineHeight="150%"
           color={shades.neutral[600]}
         >
-          To be ready for shopping!
+          and get ready to shop!
         </Typography>
         <Typography sx={{ mt: "3rem", mb: "15px" }} fontSize="18px">
           Login Credentials
