@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { HashRouter, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./scenes/home/Home";
-import ItemDetails from "./scenes/itemDetails/ItemDetails";
+
 import Checkout from "./scenes/checkout/Checkout";
 import Conformation from "./scenes/checkout/Conformation";
 import Navbar from "./scenes/global/Navbar";
@@ -12,6 +12,7 @@ import Error from "./scenes/global/Error";
 import RegisterUser from "./scenes/user/RegisterUser";
 import User from "./scenes/user/User";
 import LoginUser from "./scenes/user/LoginUser";
+import ItemDetails from "./scenes/itemDetails/ItemDetails";
 import { user } from "./Model/menu";
 
 const ScrollToTop = () => {
