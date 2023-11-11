@@ -39,7 +39,6 @@ const User = () => {
     const expireDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
     setCookie(cookieName, jwt, {
       expires: expireDate,
-      path: "/",
     });
   };
   const saveUser = (user) => dispatch(setLoggedIn(user));
