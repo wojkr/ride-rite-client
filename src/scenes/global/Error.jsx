@@ -1,7 +1,10 @@
 import { Box, Typography, Button, useMediaQuery } from "@mui/material";
 import { shades } from "../../theme";
+import { home } from "../../Model/menu";
+import { useNavigate } from "react-router-dom";
 const Error = () => {
   const isNonMobile = useMediaQuery("(min-width:1200px");
+  const navigate = useNavigate();
   return (
     <Box
       style={{
@@ -42,7 +45,7 @@ const Error = () => {
           <Typography>
             <Button
               variant="contained"
-              href="/"
+              onClick={() => navigate(home.link())}
               sx={{
                 backgroundColor: shades.primary[400],
                 color: "white",
