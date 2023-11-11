@@ -1,6 +1,9 @@
 import { Alert, Box, Button } from "@mui/material";
 import { shades } from "../../theme";
+import { home } from "../../Model/menu";
+import { useNavigate } from "react-router-dom";
 const Conformation = () => {
+  const navigate = useNavigate();
   return (
     <Box m="90px auto" width="80%" height="50vh">
       <Alert severity="success">
@@ -9,7 +12,7 @@ const Conformation = () => {
       </Alert>
       <Button
         variant="contained"
-        href="/"
+        onClick={() => navigate(home.link())}
         sx={{
           marginTop: "1rem",
           backgroundColor: shades.primary[400],

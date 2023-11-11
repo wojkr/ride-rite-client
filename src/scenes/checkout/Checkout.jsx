@@ -9,6 +9,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { serverUrl } from "../../serverUrl";
 import { checkoutSchema, userValues } from "../../Schemas/checkoutSchema";
 import { useNavigate } from "react-router-dom";
+import { home } from "../../Model/menu";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
@@ -23,7 +24,7 @@ const Checkout = () => {
   const isSecondStep = activeStep === 1;
 
   const handleFormSubmit = async (values, actions) => {
-    if (cart.length < 1) navigate("/");
+    if (cart.length < 1) navigate(home.link());
     setActiveStep(activeStep + 1);
 
     if (isFirstStep && values.shippingAddress.isSameAddress) {
@@ -61,7 +62,7 @@ const Checkout = () => {
   //redirection when carts empty
   useEffect(() => {
     if (cart.length < 1) {
-      navigate("/");
+      navigate(home.link());
     }
   }, [cart]);
   return (
