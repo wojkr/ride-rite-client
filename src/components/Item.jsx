@@ -43,7 +43,7 @@ const Item = ({ item, width }) => {
         height="400px"
       >
         <img
-          src={`${serverUrl}${url}`}
+          src={url ? `${serverUrl}${url}` : ""}
           alt={name}
           width="300px"
           height="400px"
