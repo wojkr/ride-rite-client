@@ -25,6 +25,9 @@ import { useCookies } from "react-cookie";
 import { setLoggedIn } from "../../state/user";
 import { cookieName } from "../../Model/cookies";
 import FlashMessage from "../../components/FlashMessage";
+import Loader from "../global/Loader";
+import { defaultError, spinningUpError } from "../../Model/error";
+import MUiAlert from "../../Model/MUiAlert";
 
 const stripePromise = loadStripe(
   "pk_test_51MrMGHBz2K77cEWJhJTJdxXznJ3ovLI6uL9GBCgaxl0bOzURA70QYlJCo2kcsZd4EnsB3Tf2fkikPmAUshgkyz9W00R6q4A7GX"
@@ -71,6 +74,7 @@ const RegisterUser = () => {
   }, []);
 
   const register = async (values) => {
+    let message, severity;
     delete values.passwordConfirmation;
     const requestBody = {
       ...values,
@@ -81,16 +85,22 @@ const RegisterUser = () => {
       .then((response) => {
         saveUser(response.data.user);
         saveJWT(response.data.jwt);
-        const message = "You have successfully signed up!";
-        const severity = "success";
+        severity = MUiAlert.success;
+        message = "You have successfully signed up!";
         navigate(`${user.link()}?severity=${severity}&message=${message}`);
       })
       .catch((error) => {
-        const severity = "error";
+        let message, severity;
+        if (error.code == "ERR_NETWORK") {
+          severity = MUiAlert.warning;
+          message = `${spinningUpError.title} ${spinningUpError.message}`;
+        } else {
+          severity = MUiAlert.error;
+          message =
+            error?.response?.data?.error?.message || defaultError.message;
+        }
         setActiveStep(0);
-        navigate(
-          `?severity=${severity}&message=${error.response.data.error.message}`
-        );
+        navigate(`?severity=${severity}&message=${message}`);
       });
   };
   return (
@@ -129,6 +139,7 @@ const RegisterUser = () => {
           </Step>
         )}
       </Stepper>
+      {activeStep > 1 && <Loader noMargin />}
       <Box>
         <Formik
           onSubmit={handleFormSubmit}

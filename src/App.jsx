@@ -44,6 +44,7 @@ function App() {
           <Route path={`/${user.login.link()}`} element={<LoginUser />} />
           <Route path={`/${user.register.link()}`} element={<RegisterUser />} />
 
+          <Route path="/error" element={<Error />} />
           <Route path="/*" element={<Error />} />
         </Routes>
         <CartMenu />

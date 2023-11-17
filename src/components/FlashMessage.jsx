@@ -2,7 +2,7 @@ import { Alert } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-const getParams = (queryString) => {
+export const getParams = (queryString) => {
   const params = new URLSearchParams(queryString);
   const severity = params.get("severity");
   const message = params.get("message")
@@ -11,7 +11,6 @@ const getParams = (queryString) => {
 
   return { severity, message };
 };
-
 const FlashMessage = () => {
   const location = useLocation();
   const [message, setMessage] = useState(getParams(location.search).message);
@@ -20,8 +19,10 @@ const FlashMessage = () => {
 
   useEffect(() => {
     const { message, severity } = getParams(location.search);
+    setMessage(message);
+    setSeverity(severity);
     setShowFlash(message && severity);
-  }, [location.search]);
+  }, [location]);
   return (
     <>
       {showFlash && message && severity && (

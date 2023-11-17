@@ -12,13 +12,18 @@ import { shades } from "../../theme";
 import { useCookies } from "react-cookie";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoggedIn } from "../../state/user";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { user } from "../../Model/menu";
 import { loginValidation } from "../../utils/loginValidation";
 import ButtonRegister from "../../components/ButtonRegister";
 import { cookieName } from "../../Model/cookies";
 import { serverUrl } from "../../serverUrl";
+import LoaderStyled from "../../components/LoaderStyled";
+import FlashMessage, { getParams } from "../../components/FlashMessage";
+import { createQuery } from "../../utils/fetchFromServer";
+import { defaultError, spinningUpError } from "../../Model/error";
+import MUiAlert from "../../Model/MUiAlert";
 const initialValues = {
   email: "",
   password: "",
@@ -28,7 +33,9 @@ const User = () => {
   const isNonMobile = useMediaQuery("(min-width:1200px");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const { isLoggedIn } = useSelector((state) => state.user);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     if (isLoggedIn) navigate(user.link());
@@ -44,8 +51,10 @@ const User = () => {
   const saveUser = (user) => dispatch(setLoggedIn(user));
 
   const handleFormSubmit = async (values) => {
+    if (isSubmitted) return;
+    setIsSubmitted(true);
     // Request API.
-    await axios
+    axios
       .post(
         `${serverUrl}/api/auth/local?populate=billingAddress&populate=shippingAddress&populate=orders`,
         {
@@ -61,13 +70,26 @@ const User = () => {
         navigate(`${user.link()}?severity=${severity}&message=${message}`);
       })
       .catch((error) => {
-        // Handle error.
-        console.log("An error occurred:", error.message);
-        const severity = "error";
-        navigate(
-          `${user.link()}?severity=${severity}&message=${error.message}`
-        );
-      });
+        let message, severity;
+        //server spins up
+        if (error.code == "ERR_NETWORK") {
+          severity = MUiAlert.warning;
+          message = `${spinningUpError.title} ${spinningUpError.message}`;
+          navigate(
+            `${user.login.link()}?severity=${severity}&message=${message}`
+          );
+        } else {
+          //other error
+          severity = MUiAlert.error;
+          message = `${
+            error?.response?.data?.error?.message || defaultError.message
+          }`;
+          navigate(
+            `${user.login.link()}?severity=${severity}&message=${message}`
+          );
+        }
+      })
+      .finally(() => setIsSubmitted(false));
   };
 
   return (
@@ -94,10 +116,14 @@ const User = () => {
           fontWeight="bold"
           lineHeight="150%"
           color={shades.neutral[600]}
+          mb={getParams(location.search).severity ? "15px" : "78px"}
         >
           and get ready to shop!
         </Typography>
-        <Typography sx={{ mt: "3rem", mb: "15px" }} fontSize="18px">
+        <Box my="10px">
+          <FlashMessage />
+        </Box>
+        <Typography sx={{ my: "15px" }} fontSize="18px">
           Login Credentials
         </Typography>
         <Formik
@@ -117,6 +143,7 @@ const User = () => {
           }) => (
             <form onSubmit={handleSubmit}>
               <TextField
+                disabled={isSubmitted}
                 fullWidth
                 type="text"
                 label="Email"
@@ -129,6 +156,7 @@ const User = () => {
                 sx={{ gridColumn: "span 4", marginBottom: "15px" }}
               />
               <TextField
+                disabled={isSubmitted}
                 fullWidth
                 type="password"
                 label="Password"
@@ -139,21 +167,25 @@ const User = () => {
                 helperText={touched.password && errors.password}
                 sx={{ gridColumn: "span 4", marginBottom: "15px" }}
               />
-              <Button
-                fullWidth
-                type="submit"
-                color="primary"
-                variant="contained"
-                sx={{
-                  backgroundColor: shades.primary[500],
-                  boxShadow: "none",
-                  color: "white",
-                  borderRaddius: "none",
-                  padding: "15px 40px ",
-                }}
-              >
-                Log in
-              </Button>
+              {!isSubmitted ? (
+                <Button
+                  fullWidth
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  sx={{
+                    backgroundColor: shades.primary[500],
+                    boxShadow: "none",
+                    color: "white",
+                    borderRaddius: "none",
+                    padding: "15px 40px ",
+                  }}
+                >
+                  Log in
+                </Button>
+              ) : (
+                <LoaderStyled noMargin={true} size="55px" />
+              )}
             </form>
           )}
         </Formik>
