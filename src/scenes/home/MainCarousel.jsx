@@ -121,10 +121,12 @@ const MainCarousel = () => {
                 variant="h1"
                 backgroundColor={shades.neutral[100] + "ff"}
                 color="#000"
-                sx={{ mixBlendMode: "screen" }}
+                sx={{
+                  mixBlendMode: "screen",
+                  fontSize: "clamp(32px,10dvw,200px)",
+                }}
                 fontWeight="bold"
                 padding="1rem"
-                fontSize="10vw"
               >
                 Summer Sale
               </Typography>
