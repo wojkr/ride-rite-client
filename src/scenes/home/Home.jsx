@@ -9,12 +9,15 @@ const Home = () => {
   const location = useLocation();
   const sectionId = location.hash.substring(1);
   const categoryId = location.search.substring(1);
+
   useLayoutEffect(() => {
     const element = document.getElementById(sectionId);
+    console.log(element);
+    console.log(`sectionId:${sectionId}, categoryId:${categoryId}`);
     if (element) {
       element.scrollIntoView();
     }
-  }, [location]);
+  }, [location, window.location.hash]);
   return (
     <>
       <MainCarousel />
