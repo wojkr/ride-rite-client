@@ -1,25 +1,14 @@
-import { Box, Container, Divider, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { shades } from "../../theme";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Order from "../../components/Order";
-import { serverUrl } from "../../serverUrl";
-import { setItems } from "../../state/cart";
 import { useEffect, useState } from "react";
 
-const Orders = ({ orders }) => {
-  const items = useSelector((state) => state.cart.items);
-  const dispatch = useDispatch();
+const Orders = ({ orders = [] }) => {
   const [formattedOrders, setFormattedOrders] = useState(false);
 
-  const getItems = async () => {
-    const items = await fetch(`${serverUrl}/api/items?populate=image`, {
-      method: "GET",
-    });
-    const itemsJson = await items.json();
-    dispatch(setItems(itemsJson.data));
-  };
-  //...
-  function populateOrders(orders, items) {
+  const items = useSelector((state) => state.cart.items);
+  function populateOrders(orders) {
     return orders.map((order) => {
       const matchedProducts = order.products.map((product) => {
         const matchingItem = items.find((item) => item.id === product.id);
@@ -36,11 +25,8 @@ const Orders = ({ orders }) => {
     });
   }
   useEffect(() => {
-    setFormattedOrders(populateOrders(orders, items));
+    if (orders?.length > 0) setFormattedOrders(populateOrders(orders));
   }, [items]);
-  useEffect(() => {
-    getItems();
-  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   return (
     <Container maxWidth="md">
