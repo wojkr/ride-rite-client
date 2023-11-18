@@ -22,7 +22,7 @@ const Item = ({ item, width }) => {
     palette: { neutral },
   } = useTheme();
 
-  const { category, price, name, image } = item.attributes;
+  const { category, price, name, image } = item.attributes || {};
   const {
     data: {
       attributes: {
@@ -96,9 +96,10 @@ const Item = ({ item, width }) => {
       {/* INFO */}
       <Box mt="3px">
         <Typography variant="subtitle2" color={neutral.dark}>
-          {category
-            ?.replace(/([A-Z])/g, " $1")
-            ?.replace(/^./, (str) => str.toUpperCase())}
+          {category &&
+            category
+              ?.replace(/([A-Z])/g, " $1")
+              ?.replace(/^./, (str) => str.toUpperCase())}
         </Typography>
         <Typography>{name}</Typography>
         <Typography fontWeight="bold">£{price}</Typography>

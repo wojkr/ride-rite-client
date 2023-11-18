@@ -16,21 +16,20 @@ const SetUserFromCookie = () => {
     }
   }, []);
   async function getUser(token) {
+    const url = `${serverUrl}/api/users/me?populate=wishlist&populate=billingAddress&populate=shippingAddress&populate=orders`;
     await axios
-      .get(
-        `${serverUrl}/api/users/me?populate=billingAddress&populate=shippingAddress&populate=orders`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
+        console.log(response.data);
         dispatch(setLoggedIn(response.data));
       })
       .catch((error) => {
         // Handle error.
-        console.log("An error occurred:", error.response);
+        console.error("An error occurred:", error.response);
       });
   }
   return null;

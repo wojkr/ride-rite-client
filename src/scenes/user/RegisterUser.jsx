@@ -79,9 +79,9 @@ const RegisterUser = () => {
     const requestBody = {
       ...values,
     };
-
+    const url = `${serverUrl}/api/auth/local/register`;
     await axios
-      .post(`${serverUrl}/api/auth/local/register`, requestBody)
+      .post(url, requestBody)
       .then((response) => {
         saveUser(response.data.user);
         saveJWT(response.data.jwt);

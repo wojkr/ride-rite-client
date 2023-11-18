@@ -21,7 +21,6 @@ import { cookieName } from "../../Model/cookies";
 import { serverUrl } from "../../serverUrl";
 import LoaderStyled from "../../components/LoaderStyled";
 import FlashMessage, { getParams } from "../../components/FlashMessage";
-import { createQuery } from "../../utils/fetchFromServer";
 import { defaultError, spinningUpError } from "../../Model/error";
 import MUiAlert from "../../Model/MUiAlert";
 const initialValues = {
@@ -54,14 +53,12 @@ const User = () => {
     if (isSubmitted) return;
     setIsSubmitted(true);
     // Request API.
+    const url = `${serverUrl}/api/auth/local?populate=billingAddress&populate=shippingAddress&populate=orders&populate=wishlist`;
     axios
-      .post(
-        `${serverUrl}/api/auth/local?populate=billingAddress&populate=shippingAddress&populate=orders`,
-        {
-          identifier: values.email,
-          password: values.password,
-        }
-      )
+      .post(url, {
+        identifier: values.email,
+        password: values.password,
+      })
       .then((response) => {
         saveUser(response.data.user);
         saveJWT(response.data.jwt);
