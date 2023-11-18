@@ -16,6 +16,7 @@ import { shades } from "../../theme";
 import { category as categoryModel } from "../../Model/category";
 import fetchFromServer, { createQuery } from "../../utils/fetchFromServer";
 import Loader from "../global/Loader";
+import ItemsContainer from "../../components/ItemsContainer";
 
 const ShoppingList = ({ categoryId }) => {
   const dispatch = useDispatch();
@@ -39,7 +40,7 @@ const ShoppingList = ({ categoryId }) => {
   };
 
   useEffect(() => {
-    getItems();
+    if (items.length < 1) getItems();
   }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const newArrival = items.filter(
@@ -80,13 +81,7 @@ const ShoppingList = ({ categoryId }) => {
           <Tab label="TOP RATED" value={categoryModel.topRated} />
         </Tabs>
         {items?.length > 0 ? (
-          <Box
-            margin="0 auto"
-            display="grid"
-            gridTemplateColumns="repeat(auto-fill,300px)"
-            justifyContent="space-around"
-            rowGap="20px"
-          >
+          <ItemsContainer>
             {value === "all" &&
               items.map((item) => (
                 <Item
@@ -119,7 +114,7 @@ const ShoppingList = ({ categoryId }) => {
                   width="300px"
                 />
               ))}
-          </Box>
+          </ItemsContainer>
         ) : (
           <Loader showServerInfo />
         )}
