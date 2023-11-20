@@ -14,6 +14,7 @@ import User from "./scenes/user/User";
 import LoginUser from "./scenes/user/LoginUser";
 import ItemDetails from "./scenes/itemDetails/ItemDetails";
 import { user } from "./Model/menu";
+import OurStores from "./scenes/ourStores/OurStores";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -43,6 +44,8 @@ function App() {
           <Route path={`/${user.linkText}`} element={<User />} />
           <Route path={`/${user.login.link()}`} element={<LoginUser />} />
           <Route path={`/${user.register.link()}`} element={<RegisterUser />} />
+
+          <Route path="/ourstores" element={<OurStores />} />
 
           <Route path="/error" element={<Error />} />
           <Route path="/*" element={<Error />} />
