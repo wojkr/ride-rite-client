@@ -13,6 +13,7 @@ import cartReducer from "./state/cart";
 import menuReducer from "./state/menu";
 import userReducer from "./state/user";
 import SetUserFromCookie from "./utils/SetUserFromCookie";
+import GetItems from "./utils/GetItems";
 
 const store = configureStore({
   reducer: { cart: cartReducer, menu: menuReducer, user: userReducer },
@@ -23,9 +24,10 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
+        <SetUserFromCookie />
+        <GetItems />
         <CssBaseline />
         <App />
-        <SetUserFromCookie />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>
