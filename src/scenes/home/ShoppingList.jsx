@@ -6,20 +6,16 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Item from "../../components/Item";
-import { setItems } from "../../state/cart";
-import { serverUrl } from "../../serverUrl";
 import { shades } from "../../theme";
 import { category as categoryModel } from "../../Model/category";
-import fetchFromServer, { createQuery } from "../../utils/fetchFromServer";
 import Loader from "../global/Loader";
 import ItemsContainer from "../../components/ItemsContainer";
 
 const ShoppingList = ({ categoryId }) => {
-  const dispatch = useDispatch();
   const [value, setValue] = useState(categoryModel.check(categoryId));
   const items = useSelector((state) => state.cart.items);
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -27,29 +23,13 @@ const ShoppingList = ({ categoryId }) => {
     setValue(newValue);
   };
 
-  const getItems = async () => {
-    const items = await fetchFromServer(
-      `${serverUrl}/api/items?populate=image`,
-      {
-        method: "GET",
-      }
-    );
-    if (!items?.error) {
-      dispatch(setItems(items.data));
-    }
-  };
-
-  useEffect(() => {
-    if (items.length < 1) getItems();
-  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  const newArrival = items.filter(
+  const newArrival = items?.filter(
     (i) => i.attributes.category === categoryModel.newArrival
   );
-  const bestSeller = items.filter(
+  const bestSeller = items?.filter(
     (i) => i.attributes.category === categoryModel.bestSeller
   );
-  const topRated = items.filter(
+  const topRated = items?.filter(
     (i) => i.attributes.category === categoryModel.topRated
   );
   return (

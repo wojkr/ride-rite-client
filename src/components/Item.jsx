@@ -1,19 +1,27 @@
 import { useTheme } from "@emotion/react";
 import {
   Add as AddIcon,
-  AspectRatio,
   Remove as RemoveIcon,
   ShoppingBagOutlined as BagIcon,
 } from "@mui/icons-material";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { addToCart } from "../state/cart";
 import { shades } from "../theme";
 import { serverUrl } from "../serverUrl";
+import ButtonWishlist from "./ButtonWishlist";
 
 const Item = ({ item, width }) => {
+  const isLoggedIn = useSelector(
+    (state) => state.user.isLoggedIn,
+    shallowEqual
+  );
+  const wishlist = useSelector(
+    (state) => state.user.user.wishlist,
+    shallowEqual
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [count, setCount] = useState(1);
@@ -92,6 +100,21 @@ const Item = ({ item, width }) => {
             </Button>
           </Box>
         </Box>
+        {isLoggedIn && (
+          <Box
+            display="block"
+            position="absolute"
+            top="10%"
+            right="0"
+            padding="0 5%"
+          >
+            <ButtonWishlist
+              backgroundColor={shades.neutral[100]}
+              isAdded={wishlist && wishlist.find((w) => w.id == item.id)}
+              id={item.id}
+            />
+          </Box>
+        )}
       </Box>
       {/* INFO */}
       <Box mt="3px">

@@ -2,37 +2,27 @@ import { Box, Typography, Button, Divider } from "@mui/material";
 import { shades } from "../../theme";
 import { products } from "../../Model/menu";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import ButtonLogin from "../../components/ButtonLogin";
 import ButtonRegister from "../../components/ButtonRegister";
 import ButtonLogout from "../../components/ButtonLogout";
 import FlashMessage from "../../components/FlashMessage";
 import Orders from "./Orders";
 import Wishlist from "./Wishlist";
-import { setItems } from "../../state/cart";
-import fetchFromServer from "../../utils/fetchFromServer";
-import { useEffect } from "react";
-import { serverUrl } from "../../serverUrl";
 
 const User = () => {
-  const { user, isLoggedIn } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user, shallowEqual);
+  const isLoggedIn = useSelector(
+    (state) => state.user.isLoggedIn,
+    shallowEqual
+  );
+  const wishlist = useSelector(
+    (state) => state.user.user.wishlist,
+    shallowEqual
+  );
+  const orders = useSelector((state) => state.user.user.orders, shallowEqual);
   const navigate = useNavigate();
-  const items = useSelector((state) => state.cart.items);
-  const dispatch = useDispatch();
 
-  const getItems = async () => {
-    const url = `${serverUrl}/api/items?populate=image`;
-    if (!items || !items?.length || items?.length < 1) {
-      const itemsJson = await fetchFromServer(url, {
-        method: "GET",
-      });
-      dispatch(setItems(itemsJson.data));
-    }
-  };
-
-  useEffect(() => {
-    getItems();
-  }, []);
   return (
     <>
       <Box
@@ -97,16 +87,16 @@ const User = () => {
           )}
         </Box>
       </Box>
-      {isLoggedIn && user?.orders && user?.orders.length > 0 && (
+      {isLoggedIn && orders && orders.length > 0 && (
         <>
           <Divider sx={{ borderColor: shades.neutral[600], width: "100%" }} />
-          <Orders orders={user?.orders} />
+          <Orders orders={orders} />
         </>
       )}
-      {isLoggedIn && user?.wishlist && user?.wishlist.length > 0 && (
+      {isLoggedIn && wishlist && wishlist.length > 0 && (
         <>
           <Divider sx={{ borderColor: shades.neutral[600], width: "100%" }} />
-          <Wishlist wishlist={user?.wishlist} />
+          <Wishlist wishlist={wishlist} />
         </>
       )}
     </>

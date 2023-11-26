@@ -13,7 +13,7 @@ import {
   ShoppingBagOutlined as BagIcon,
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Item from "../../components/Item";
 
@@ -36,7 +36,14 @@ const ItemDetails = () => {
   const [value, setValue] = useState("description");
   const [count, setCount] = useState(1);
   const [item, setItem] = useState(null);
-  const { user, isLoggedIn } = useSelector((state) => state.user);
+  const isLoggedIn = useSelector(
+    (state) => state.user.isLoggedIn,
+    shallowEqual
+  );
+  const wishlist = useSelector(
+    (state) => state.user.user.wishlist,
+    shallowEqual
+  );
   const items = useSelector((state) => state.cart.items);
   const [lastItemId, setLastItemId] = useState(0);
 
@@ -158,7 +165,12 @@ const ItemDetails = () => {
                   <Typography variant="h3">
                     {item?.attributes?.name}{" "}
                     {isLoggedIn && (
-                      <ButtonWishlist isFavorite={user?.wishlist} />
+                      <ButtonWishlist
+                        isAdded={
+                          wishlist && wishlist.find((w) => w.id == item.id)
+                        }
+                        id={item.id}
+                      />
                     )}
                   </Typography>
                   <Typography fontWeight="bold">
