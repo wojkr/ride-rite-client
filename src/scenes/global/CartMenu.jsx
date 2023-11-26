@@ -52,18 +52,15 @@ const CartMenu = () => {
     return total + item?.attributes?.price * item?.count;
   }, 0);
   return (
-    //   overlay
-    <Collapse orientation="horizontal" in={isCartOpen}>
+    <Collapse orientation="horizontal" sx={{ zIndex: 100 }} in={isCartOpen}>
       <Box
-        className="2"
         position="fixed"
         top="0"
         left="0"
         width="100%"
-        //   width={isCartOpen ? "500px" : "0"}
         height="100%"
         padding="20px"
-        zIndex="10"
+        zIndex="100"
         backgroundColor="#01010155"
         overflow="auto"
       >
