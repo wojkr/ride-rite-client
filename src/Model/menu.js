@@ -2,7 +2,7 @@ const preHash = "/#";
 
 const home = {
   title: "Home",
-  linkText: "Home",
+  linkText: "home",
   link: function () {
     return preHash + this.linkText;
   },
@@ -10,7 +10,7 @@ const home = {
 
 const about = {
   title: "About",
-  linkText: "About",
+  linkText: "about",
   link: function () {
     return preHash + this.linkText;
   },
@@ -18,7 +18,7 @@ const about = {
 
 const products = {
   title: "Products",
-  linkText: "Products",
+  linkText: "products",
   link: function () {
     return preHash + this.linkText;
   },
@@ -26,7 +26,7 @@ const products = {
 
 const subscribe = {
   title: "Subscribe",
-  linkText: "Subscribe",
+  linkText: "subscribe",
   link: function () {
     return preHash + this.linkText;
   },

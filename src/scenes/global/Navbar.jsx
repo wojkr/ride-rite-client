@@ -21,7 +21,6 @@ const Navbar = () => {
   return (
     <nav className="">
       <Box
-        className=""
         display="flex"
         alignItems="center"
         justifyContent="center"

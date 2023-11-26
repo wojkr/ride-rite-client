@@ -6,12 +6,12 @@ import { useEffect, useState } from "react";
 
 const Orders = ({ orders = [] }) => {
   const [formattedOrders, setFormattedOrders] = useState(false);
-
   const items = useSelector((state) => state.cart.items);
+
   function populateOrders(orders) {
     return orders.map((order) => {
       const matchedProducts = order.products.map((product) => {
-        const matchingItem = items.find((item) => item.id === product.id);
+        const matchingItem = items?.find((item) => item.id === product.id);
         if (matchingItem) {
           return { ...product, ...matchingItem };
         }
