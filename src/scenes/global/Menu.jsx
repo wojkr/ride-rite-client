@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Typography } from "@mui/material";
+import { Box, Divider, IconButton, useMediaQuery } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { Close as CloseIcon } from "@mui/icons-material";
 import styled from "@emotion/styled";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Collapse } from "@mui/material";
 import { useEffect, useRef } from "react";
 import { menu } from "../../Model/menu";
+import SearchBar from "./SearchBar";
 
 const FlexBox = styled(Box)`
   display: flex;
@@ -26,6 +27,7 @@ const MenuLink = styled(Link)({
 const Menu = () => {
   const dispatch = useDispatch();
   const { isMenuOpen } = useSelector((state) => state.menu);
+  const showSearch = useMediaQuery("(min-width:800px)");
 
   const menuRef = useRef(null);
 
@@ -65,7 +67,7 @@ const Menu = () => {
           position="fixed"
           top="0"
           right="0"
-          width="max(400px,30%)"
+          width="max(320px,30%)"
           height="100%"
           padding="30px"
           zIndex="100"
@@ -80,6 +82,7 @@ const Menu = () => {
               </IconButton>
             </FlexBox>
             <Box>
+              {!showSearch && <SearchBar />}
               {menu.map((m, index) => (
                 <Box key={`${m.title}-${index}`}>
                   <MenuLink

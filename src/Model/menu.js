@@ -69,5 +69,22 @@ const item = {
     return "/" + this.linkText;
   },
 };
+const search = {
+  title: "Search",
+  linkText: "search",
+  link: function () {
+    return "/" + this.linkText;
+  },
+};
 const menu = [home, about, products, subscribe, ourstores];
-export { home, about, products, subscribe, ourstores, user, menu, item };
+export {
+  home,
+  about,
+  products,
+  subscribe,
+  ourstores,
+  user,
+  menu,
+  item,
+  search,
+};

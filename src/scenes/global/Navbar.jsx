@@ -13,10 +13,12 @@ import { shades } from "../../theme";
 import { setIsCartOpen } from "../../state/cart";
 import { setIsMenuOpen } from "../../state/menu";
 import { home, user } from "../../Model/menu";
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const showSearch = useMediaQuery("(min-width:800px)");
   const { cart } = useSelector((state) => state.cart);
   return (
     <nav className="">
@@ -26,7 +28,7 @@ const Navbar = () => {
         justifyContent="center"
         width="100%"
         minHeight="60px"
-        backgroundColor={shades.neutral[100] + "F0"}
+        backgroundColor={shades.neutral[100]}
         position="fixed"
         top="0"
         left="0"
@@ -61,9 +63,7 @@ const Navbar = () => {
             columnGap={isNonMobile ? "20px" : "7px"}
             zIndex="2"
           >
-            <IconButton sx={{ color: "black" }}>
-              <SearchOutlined />
-            </IconButton>
+            {showSearch && <SearchBar />}
             <Link to={user.link()}>
               <IconButton sx={{ color: "black" }}>
                 <PersonOutline />

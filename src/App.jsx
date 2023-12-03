@@ -15,6 +15,7 @@ import LoginUser from "./scenes/user/LoginUser";
 import ItemDetails from "./scenes/itemDetails/ItemDetails";
 import { user } from "./Model/menu";
 import OurStores from "./scenes/ourStores/OurStores";
+import Search from "./scenes/search/Search";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -46,6 +47,8 @@ function App() {
           <Route path={`/${user.register.link()}`} element={<RegisterUser />} />
 
           <Route path="/ourstores" element={<OurStores />} />
+
+          <Route path="/search/:query" element={<Search />} />
 
           <Route path="/error" element={<Error />} />
           <Route path="/*" element={<Error />} />
