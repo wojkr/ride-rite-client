@@ -65,7 +65,7 @@ const Navbar = () => {
           >
             {showSearch && <SearchBar />}
             <Link to={user.link()}>
-              <IconButton sx={{ color: "black" }}>
+              <IconButton aria-label="user" sx={{ color: "black" }}>
                 <PersonOutline />
               </IconButton>
             </Link>
@@ -84,6 +84,7 @@ const Navbar = () => {
               }}
             >
               <IconButton
+                aria-label="cart"
                 onClick={() => dispatch(setIsCartOpen())}
                 sx={{ color: "black" }}
               >
@@ -91,6 +92,7 @@ const Navbar = () => {
               </IconButton>
             </Badge>
             <IconButton
+              aria-label="menu"
               onClick={() => dispatch(setIsMenuOpen())}
               sx={{ color: "black" }}
             >

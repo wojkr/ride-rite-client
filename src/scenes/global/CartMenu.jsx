@@ -69,7 +69,7 @@ const CartMenu = () => {
           position="fixed"
           top="0"
           right="0"
-          width="max(400px,30%)"
+          width="max(320px,30%)"
           //   width={isCartOpen ? "500px" : "0"}
           height="100%"
           padding="30px"
