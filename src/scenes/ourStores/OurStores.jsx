@@ -79,7 +79,7 @@ const OurStores = () => {
 
   return (
     <Box
-      id="About"
+      id="ourstores"
       style={{
         background: `linear-gradient(0deg, ${shades.neutral[100] + "00"}, ${
           shades.neutral[100]

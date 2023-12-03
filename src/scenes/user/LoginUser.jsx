@@ -53,7 +53,7 @@ const User = () => {
     if (isSubmitted) return;
     setIsSubmitted(true);
     // Request API.
-    const url = `${serverUrl}/api/auth/local?populate=billingAddress&populate=shippingAddress&populate=orders&populate=wishlist`;
+    const url = `${serverUrl}/api/auth/local?populate=wishlist&populate=billingAddress&populate=shippingAddress&populate=orders`;
     axios
       .post(url, {
         identifier: values.email,
