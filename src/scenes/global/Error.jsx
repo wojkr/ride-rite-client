@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { defaultError } from "../../Model/error";
+import ButtonHome from "../../components/ButtonHome";
 
 const getParams = (queryString) => {
   const params = new URLSearchParams(queryString);
@@ -92,17 +93,7 @@ const Error = () => {
           </Typography>
 
           <Typography>
-            <Button
-              variant="contained"
-              onClick={() => navigate(home.link())}
-              sx={{
-                backgroundColor: shades.primary[400],
-                color: "white",
-                "&:hover": { backgroundColor: shades.primary[500] },
-              }}
-            >
-              Go to Homepage
-            </Button>
+            <ButtonHome />
           </Typography>
         </Box>
       </Box>
