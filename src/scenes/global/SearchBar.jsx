@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
-import { useSelector } from "react-redux";
-import { Box, IconButton, InputAdornment } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, InputAdornment } from "@mui/material";
 import { SearchOutlined } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { item, search } from "../../Model/menu";
+import { setMenuClosed } from "../../state/menu";
 
 const filterOptions = createFilterOptions({
   matchFrom: "any",
@@ -16,6 +17,8 @@ const filterOptions = createFilterOptions({
 const SearchBar = () => {
   const [selectedValue, setSelectedValue] = useState(null);
   const items = useSelector((state) => state.cart.items);
+  const isMenuOpen = useSelector((state) => state.cart.isMenuOpen);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const options = items.map((item) => ({
@@ -25,13 +28,14 @@ const SearchBar = () => {
   }));
 
   const handleSubmit = (data) => {
+    console.log("hey");
+    dispatch(setMenuClosed());
     if (typeof data === "string" && data.trim() != "") {
       navigate(`${search.link()}/${data}`);
     }
     if (data?.label) {
       navigate(`${item.link()}/${data.id}`);
     }
-    // Add logic to handle the submission of the form data
   };
 
   return (
@@ -42,7 +46,7 @@ const SearchBar = () => {
           handleSubmit(selectedValue);
         }}
       >
-        <Box display="flex" id="hey">
+        <Box display="flex">
           <Autocomplete
             freeSolo
             id="search-box"
@@ -51,22 +55,27 @@ const SearchBar = () => {
             }}
             options={options}
             selectOnFocus
+            disableClearable
+            clearOnBlur
             getOptionSelected={(option, value) => option.label === value.label}
             onChange={(event, selectedOption) => {
               setSelectedValue(selectedOption);
+              if (isMenuOpen) dispatch(setMenuClosed());
               // Submit the form when an option is selected
               handleSubmit(selectedOption);
             }}
             filterOptions={filterOptions}
             renderOption={(props, option) => (
-              <Box component="li" {...props}>
+              <Box component="li" aria-label={option.label} {...props}>
                 {option.label}
               </Box>
             )}
             renderInput={(params) => (
               <TextField
-                size="small"
                 {...params}
+                size="small"
+                aria-label="search"
+                placeholder="Search"
                 value={selectedValue ? selectedValue.label : ""}
                 onChange={(event) =>
                   setSelectedValue({ label: event.target.value })
@@ -77,14 +86,7 @@ const SearchBar = () => {
                   type: "string",
                   startAdornment: (
                     <InputAdornment position="start" sx={{ mr: 0 }}>
-                      <IconButton
-                        type="submit"
-                        color="primary"
-                        aria-label="search"
-                        sx={{ color: "black" }}
-                      >
-                        <SearchOutlined />
-                      </IconButton>
+                      <SearchOutlined />
                     </InputAdornment>
                   ),
                 }}
