@@ -28,7 +28,6 @@ const SearchBar = () => {
   }));
 
   const handleSubmit = (data) => {
-    console.log("hey");
     dispatch(setMenuClosed());
     if (typeof data === "string" && data.trim() != "") {
       navigate(`${search.link()}/${data}`);
@@ -57,7 +56,9 @@ const SearchBar = () => {
             selectOnFocus
             disableClearable
             clearOnBlur
-            getOptionSelected={(option, value) => option.label === value.label}
+            isOptionEqualToValue={(option, value) =>
+              option.label === value.label
+            }
             onChange={(event, selectedOption) => {
               setSelectedValue(selectedOption);
               if (isMenuOpen) dispatch(setMenuClosed());
