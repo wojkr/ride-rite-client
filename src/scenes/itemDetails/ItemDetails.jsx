@@ -20,11 +20,12 @@ import Item from "../../components/Item";
 import { addToCart, setItems } from "../../state/cart";
 import { shades } from "../../theme";
 import { serverUrl } from "../../serverUrl";
-import { products, user } from "../../Model/menu";
+import { products } from "../../Model/menu";
 import Nav from "./Nav";
 import fetchFromServer, { createQuery } from "../../utils/fetchFromServer";
 import Loader from "../global/Loader";
 import ButtonWishlist from "../../components/ButtonWishlist";
+import Reviews from "./Reviews";
 
 const ItemDetails = () => {
   const { itemId } = useParams();
@@ -52,7 +53,7 @@ const ItemDetails = () => {
   );
 
   const getItem = async () => {
-    const url = `${serverUrl}/api/items/${itemId}?populate=image`;
+    const url = `${serverUrl}/api/items/${itemId}?populate=image&populate=reviews`;
     const item = await fetchFromServer(url, {
       method: "GET",
     });
@@ -68,8 +69,9 @@ const ItemDetails = () => {
       setItem(item.data);
     }
   };
+
   const getItems = async () => {
-    const url = `${serverUrl}/api/items?populate=image`;
+    const url = `${serverUrl}/api/items?populate=image&populate=reviews`;
     const itemsJson = await fetchFromServer(url, {
       method: "GET",
     });
@@ -95,12 +97,16 @@ const ItemDetails = () => {
     if (items.length < 1) {
       getItem();
       getItems();
-    } else {
-      setItem(items.find((i) => `${i.id}` == itemId));
     }
     setRandomId((prev) => (prev + 1) % 16);
     setInitialStates();
   }, [itemId]);
+
+  useEffect(() => {
+    const newItem = items.find((i) => `${i.id}` == itemId);
+    setItem(newItem);
+    setValue(value);
+  }, [items, itemId]);
 
   const handleChange = (e, newValue) => {
     setValue(newValue);
@@ -144,12 +150,12 @@ const ItemDetails = () => {
                 />
               </Box>
               {/* TEXT */}
-              <Box mb="40px">
+              <Box width="100%">
                 {/* TITLE AND DESCRIPTION */}
                 <Box mb="25px">
                   {item?.attributes?.category && (
-                    <Typography color={shades.primary[400]}>
-                      CATEGORIES:{" "}
+                    <Typography color={shades.neutral[700]}>
+                      Categories:{" "}
                       <Link
                         component="button"
                         to={`/?${item?.attributes?.category}#${products.linkText}`}
@@ -162,7 +168,7 @@ const ItemDetails = () => {
                       </Link>
                     </Typography>
                   )}
-                  <Typography variant="h3">
+                  <Typography variant="h3" fontWeight="bold">
                     {item?.attributes?.name}{" "}
                     {isLoggedIn && (
                       <ButtonWishlist
@@ -185,7 +191,7 @@ const ItemDetails = () => {
                   <Box
                     display="flex"
                     alignItems="center"
-                    border={`1.5px solid ${shades.neutral[200]}`}
+                    backgroundColor={shades.neutral[200]}
                     mr="20px"
                     p="2px 5px"
                   >
@@ -232,11 +238,18 @@ const ItemDetails = () => {
                     <Tab label="REVIEWS" value="reviews" />
                   </Tabs>
                 </Box>
-                <Box display="flex" flexWrap="wrap" gap="15px">
+                <Box>
                   {value === "description" && (
                     <div>{item?.attributes?.longDescription}</div>
                   )}
-                  {value === "reviews" && <div>reviews</div>}
+                  {value === "reviews" && item?.attributes?.reviews?.data && (
+                    <Reviews
+                      reviews={item?.attributes?.reviews?.data
+                        .slice()
+                        .sort((a, b) => b.id - a.id)}
+                      itemId={itemId}
+                    />
+                  )}
                 </Box>
               </Box>
             </Box>
@@ -248,18 +261,19 @@ const ItemDetails = () => {
         {items ? (
           <Box width={isNonMobileXs ? "80%" : "95%"} margin="80px auto">
             <Typography
-              variant="h3"
-              fontWeight="bold"
-              color={shades.neutral[600]}
+              variant="h2"
+              textAlign="center"
+              color={shades.neutral[700]}
             >
-              Related Products
+              Related<b>Products</b>
             </Typography>
             <Box
               mt="20px"
               display="flex"
               flexWrap="wrap"
               columnGap="1.33%"
-              justifyContent="space-between"
+              justifyContent="space-around"
+              gap="30px"
             >
               {items.slice(randomId, randomId + 4).map((item, i) => (
                 <Item key={`${Math.random()}=${item.name}-${i}`} item={item} />

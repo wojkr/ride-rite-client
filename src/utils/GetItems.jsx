@@ -8,7 +8,7 @@ const GetItems = () => {
   console.log("GETITEMS");
   const dispatch = useDispatch();
   const getItems = async () => {
-    const url = `${serverUrl}/api/items?populate=image`;
+    const url = `${serverUrl}/api/items?populate=image&populate=reviews`;
     const itemsJson = await fetchFromServer(url, {
       method: "GET",
     });

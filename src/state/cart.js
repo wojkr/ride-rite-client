@@ -13,6 +13,15 @@ export const cartSlice = createSlice({
     setItems: (state, action) => {
       state.items = action.payload;
     },
+    addReviewToItems: (state, action) => {
+      const { itemId, ...review } = action.payload;
+      state.items = state.items.map((item) => {
+        if (item.id == itemId) {
+          item.attributes.reviews.data.push(review);
+        }
+        return item;
+      });
+    },
     addToCart: (state, action) => {
       let flag = true;
       state.cart = state.cart.map((item) => {
@@ -57,6 +66,7 @@ export const {
   increaseCount,
   decreaseCount,
   setIsCartOpen,
+  addReviewToItems,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
