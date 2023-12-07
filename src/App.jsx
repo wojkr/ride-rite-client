@@ -16,6 +16,7 @@ import ItemDetails from "./scenes/itemDetails/ItemDetails";
 import { user } from "./Model/menu";
 import OurStores from "./scenes/ourStores/OurStores";
 import Search from "./scenes/search/Search";
+import AboutUs from "./scenes/aboutUs/AboutUs";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -49,6 +50,8 @@ function App() {
           <Route path="/ourstores" element={<OurStores />} />
 
           <Route path="/search/:query" element={<Search />} />
+
+          <Route path="/aboutus" element={<AboutUs />} />
 
           <Route path="/error" element={<Error />} />
           <Route path="/*" element={<Error />} />

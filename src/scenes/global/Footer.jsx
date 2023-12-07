@@ -1,10 +1,19 @@
-import { Typography, useMediaQuery } from "@mui/material";
+import { Typography, styled, useMediaQuery } from "@mui/material";
 import { Box } from "@mui/system";
 import { shades } from "../../theme";
 import logoImg from "../../assets/logo300x94.webp";
 import logoImgMini from "../../assets/logo100.webp";
 import { Link } from "react-router-dom";
-import { home } from "../../Model/menu";
+import { aboutus, home } from "../../Model/menu";
+import { main } from "../aboutUs/AboutUs";
+
+const FooterLink = styled(Link)({
+  display: "block",
+  color: shades.primary[700],
+  textDecoration: "none",
+  fontSize: "",
+  fontFamily: "",
+});
 
 const Footer = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -47,40 +56,25 @@ const Footer = () => {
                 Thank you for choosing Ride Rite for all your cycling needs!
               </Typography>
             </Box>
-            <Box>
-              <Typography mb="1rem" variant="h4" fontWeight="bold">
-                ABOUT US
-              </Typography>
-              <Typography mb="1rem" variant="subtitle2">
-                Careers
-              </Typography>
-              <Typography mb="1rem" variant="subtitle2">
-                Our Stores
-              </Typography>
-              <Typography mb="1rem" variant="subtitle2">
-                T&C
-              </Typography>
-              <Typography mb="1rem" variant="subtitle2">
-                Privacy Policy
-              </Typography>
-            </Box>
-            <Box>
-              <Typography mb="1rem" variant="h4" fontWeight="bold">
-                CUSTOMER CARE
-              </Typography>
-              <Typography mb="1rem" variant="subtitle2">
-                Help Center
-              </Typography>
-              <Typography mb="1rem" variant="subtitle2">
-                Track Your Order
-              </Typography>
-              <Typography mb="1rem" variant="subtitle2">
-                Corporate & Bulk Purchasing
-              </Typography>
-              <Typography mb="1rem" variant="subtitle2">
-                Returns & Refunds
-              </Typography>
-            </Box>
+            {main.map((m) => (
+              <Box key={m.title}>
+                <FooterLink to={`${aboutus.link()}#${m.idName}`}>
+                  <Typography mb="1rem" variant="h4" fontWeight="bold">
+                    {m.title.toUpperCase()}
+                  </Typography>
+                </FooterLink>
+                {m.sections.map((section) => (
+                  <FooterLink
+                    key={section.title}
+                    to={`${aboutus.link()}#${section.idName}`}
+                  >
+                    <Typography mb="1rem" variant="subtitle2">
+                      {section.title}
+                    </Typography>
+                  </FooterLink>
+                ))}
+              </Box>
+            ))}
             <Box>
               <Typography mb="1rem" variant="h4" fontWeight="bold">
                 CONTACT US

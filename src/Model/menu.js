@@ -15,6 +15,13 @@ const about = {
     return preHash + this.linkText;
   },
 };
+const aboutus = {
+  title: "About Us",
+  linkText: "aboutus",
+  link: function () {
+    return "/" + this.linkText;
+  },
+};
 
 const products = {
   title: "Products",
@@ -87,4 +94,5 @@ export {
   menu,
   item,
   search,
+  aboutus,
 };
