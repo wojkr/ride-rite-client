@@ -2,7 +2,7 @@ import MainCarousel from "./MainCarousel";
 import ShoppingList from "./ShoppingList";
 import Subscribe from "./Subscribe";
 import About from "./About";
-import { useLayoutEffect } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const Home = () => {
@@ -10,10 +10,10 @@ const Home = () => {
   const sectionId = location.hash.substring(1);
   const categoryId = location.search.substring(1);
 
-  useLayoutEffect(() => {
-    const element = document.getElementById(sectionId);
-    console.log(element);
-    console.log(`sectionId:${sectionId}, categoryId:${categoryId}`);
+  useEffect(() => {
+    const element = document.getElementById(
+      sectionId.substring(0, 1).toUpperCase() + sectionId.substring(1)
+    );
     if (element) {
       element.scrollIntoView();
     }
