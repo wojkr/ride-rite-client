@@ -8,6 +8,7 @@ const ItemsContainer = ({ children }) => {
       display="grid"
       gridTemplateColumns="repeat(auto-fill,300px)"
       justifyContent="space-around"
+      columnGap="20px"
       rowGap="20px"
     >
       {children}

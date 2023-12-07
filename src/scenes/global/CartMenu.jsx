@@ -99,7 +99,7 @@ const CartMenu = () => {
                   >
                     <FlexBox p="15px 0">
                       {/* ITEM IMAGE */}
-                      <Box flex="1 1 40%">
+                      <Box flex="1 1 40%" mr="7px">
                         <img
                           alt={item?.name}
                           width="123px"
@@ -119,6 +119,7 @@ const CartMenu = () => {
                           <Typography fontWeight="bold">
                             {item?.attributes.name}
                             <IconButton
+                              sx={{ ml: "-8px" }}
                               onClick={() =>
                                 dispatch(removeFromCart({ id: item?.id }))
                               }
@@ -128,15 +129,15 @@ const CartMenu = () => {
                           </Typography>
                         </FlexBox>
                         <Typography variant="subtitle2" mb="1rem">
-                          {item?.attributes.shortDescription}
+                          {/* {item?.attributes.shortDescription} */}
                         </Typography>
 
                         {/* INCREACE OR DECREACE ITEMS NUMBERS */}
-                        <FlexBox width="100%">
+                        <FlexBox width="100%" flexWrap="wrap">
                           <Box
                             display="flex"
                             alignItems="center"
-                            border={`1.5px solid ${shades.neutral[500]}`}
+                            backgroundColor={shades.neutral[200]}
                           >
                             <IconButton
                               onClick={() =>
