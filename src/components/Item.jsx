@@ -73,7 +73,6 @@ const Item = ({ item, width }) => {
               display="flex"
               alignItems="center"
               backgroundColor={shades.neutral[200]}
-              borderRadius="3px"
             >
               <IconButton onClick={() => setCount(Math.max(count - 1, 1))}>
                 <RemoveIcon />
