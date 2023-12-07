@@ -194,7 +194,7 @@ const User = () => {
           marginTop="2rem"
         >
           <Typography variant="h6" paddingX="0.5rem">
-            Dont have an account?
+            Don't have an account?
           </Typography>
           <ButtonRegister marginTop={isNonMobile ? 0 : "0.5rem"} />
         </Box>

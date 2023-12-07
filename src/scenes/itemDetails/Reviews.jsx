@@ -21,10 +21,18 @@ const Reviews = ({ reviews, itemId }) => {
             variant="h4"
             fontWeight="bold"
             color={shades.primary[400]}
+            textAlign="center"
           >
             Log in to Share Your Review
           </Typography>
-          <Box display="flex" gap="30px" flexWrap="wrap" mb="30px">
+          <Box
+            display="flex"
+            gapRow="30px"
+            columnGap="16px"
+            flexWrap="wrap"
+            justifyContent="center"
+            mb="30px"
+          >
             <ButtonLogin />
             <ButtonRegister />
           </Box>

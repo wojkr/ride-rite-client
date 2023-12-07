@@ -49,7 +49,10 @@ const User = () => {
             lineHeight="150%"
             color={shades.neutral[600]}
           >
-            Hello {user.username || "Stranger"}!
+            Hello{" "}
+            {user?.username?.substring(0, 1).toUpperCase() +
+              user?.username?.substring(1) || "Stranger"}
+            !
           </Typography>
           <Typography
             variant="h3"
@@ -57,7 +60,7 @@ const User = () => {
             color={shades.neutral[600]}
           >
             {" "}
-            Are you ready to get a new bicycle?
+            Ready for a new bicycle adventure?
           </Typography>
           {isLoggedIn ? (
             <>
@@ -75,14 +78,14 @@ const User = () => {
                   "&:hover": { backgroundColor: shades.neutral[700] },
                 }}
               >
-                Yes!
+                Yes, I'm ready!
               </Button>
               <ButtonLogout />
             </>
           ) : (
             <>
-              <ButtonLogin text="Yes! I have an account" />
-              <ButtonRegister text="I do not have an account" />
+              <ButtonLogin text="Yes, I have an account" />
+              <ButtonRegister text="I don't have an account" />
             </>
           )}
         </Box>

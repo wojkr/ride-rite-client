@@ -106,20 +106,16 @@ const RegisterUser = () => {
   return (
     <Box width={isNonMobile ? "80%" : "95%"} m="100px auto">
       <Typography
-        variant="h2"
+        variant="h1"
         fontWeight="bold"
         lineHeight="150%"
         color={shades.neutral[600]}
       >
         Sign Up
       </Typography>
-      <Typography
-        variant="h3"
-        fontWeight="bold"
-        lineHeight="150%"
-        color={shades.neutral[600]}
-      >
-        To order quicker!
+      <Typography variant="h4" lineHeight="150%" color={shades.neutral[700]}>
+        Unlock Faster Ordering, Share Feedback, and Build Your Wishlist! Create
+        Your Account Today.
       </Typography>
       <FlashMessage />
       <Stepper activeStep={activeStep} sx={{ m: "20px 0" }}>

@@ -94,6 +94,19 @@ const MainCarousel = () => {
                 height: "700px",
                 objectFit: "cover",
                 backgroundAttachment: "fixed",
+                position: "relative",
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                background:
+                  "linear-gradient(to bottom, rgba(255,255,205,0.2) 0%, rgba(225,225,255,0.2) 100%)",
+                pointerEvents: "none",
               }}
             />
             {/* CONTAINER FOR TEXT */}

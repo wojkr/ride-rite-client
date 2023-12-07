@@ -37,6 +37,16 @@ export const shades = {
 };
 
 export const theme = createTheme({
+  components: {
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+        style: {
+          borderRadius: 0,
+        },
+      },
+    },
+  },
   palette: {
     primary: { main: shades.primary[500] },
     secondary: { main: shades.secondary[500] },
